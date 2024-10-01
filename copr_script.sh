@@ -45,7 +45,7 @@ done
 
 # Run the converter file to generate the filterlist
 tar xvf $CONVERTER_FILE.tar.xz
-./$CONVERTER_FILE/$CONVERTER_FILE --input_format=filter-list --output_format=unindexed-ruleset --input_files=$LISTS --output_file=hardened-chromium_blocklist
+./$CONVERTER_FILE/$CONVERTER_FILE --input_format=filter-list --output_format=unindexed-ruleset --input_files=$LISTS --output_file=hardened-chromium-blocklist
 
 # Cleanup (only needed for a local, non-copr, run)
 rm easylist.txt easyprivacy.txt
