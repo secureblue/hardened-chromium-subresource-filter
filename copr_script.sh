@@ -6,7 +6,7 @@ readonly CONVERTER_FILE="ruleset_converter"
 readonly GIT_URL="https://raw.githubusercontent.com/secureblue/hardened-chromium-subresource-filter/refs/heads/master/"
 
 # Checksums use SHA384
-readonly SPEC_CHECKSUM="36c9d0d637e68423c1371a4fd5541851a14c7315082c19a8e08f11af8f98ecd415a6293548b1ae43b3bb9a56212ad453"
+readonly SPEC_CHECKSUM="3a75b3b1605e11b8c084775ab92efddcb3e106c441d176ff62c3c4b546b04181ad04a60b1d251b84a101dd9830fc7d9b"
 readonly CONVERTER_CHECKSUM="28e225e884b2e657962ddb1b8900c41782e21a5c6208c30f75617d83bdaabc7027f0eaf3be873aa99d5a794d62c72d30"
 
 LISTS="easylist.txt,easyprivacy.txt"
