@@ -1,20 +1,34 @@
+# !!! UNDER CONSTRUCTION, WATCH YOUR STEP !!!
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
 Requires:  hardened-chromium
-Source0:   hardened-chromium-blocklist
 License:   GPL-2.0
 Summary:   Subresource filter for hardened-chromium
 Version:   1.0
 # Automatically generated version number, so that it doesn't need to be incremented manually
 %{lua: print("Release: "..os.time().."\n")}
 
+Source0: depot_tools.zip
+Source1: chromium.zip
+Source2: easylist.txt
+Source3: easyprivacy.txt
+
 %description
 Filters used by hardened-chromium to provide adblocking.
+
+%build
+unzip %{SOURCE0}
+export PATH="$PATH:$(pwd)/depot_tools"
+unzip %{SOURCE1}
+cd chromium/src
+ninja -C out/Release/ subresource_filter_tools
+cd ../../
+./chromium/src/out/Release/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
 
 %install
 INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium"
 mkdir -p "$INSTALL_DIR"
-install -m 0644 %{SOURCE0} "$INSTALL_DIR/hardened-chromium-blocklist"
+install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
 
 %post
 if [ -d "/home/" ]; then
