@@ -1,7 +1,8 @@
 #! /bin/bash -x
 
 # Preset variables
-readonly GIT_URL="https://github.com/secureblue/hardened-chromium-subresource-filter.git"
+readonly NAME="hardened-chromium-subresource-filter"
+readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 readonly LIST_SOURCES="https://easylist.to/easylist/easylist.txt https://easylist.to/easylist/easyprivacy.txt"
 
 # Get chromium's source and depot tools
@@ -23,3 +24,4 @@ wget $LIST_SOURCES
 
 # Clone the repo with spec file
 git clone $GIT_URL
+cp $NAME/$NAME.spec ./
