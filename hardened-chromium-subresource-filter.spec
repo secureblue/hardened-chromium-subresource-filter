@@ -27,7 +27,10 @@ Filters used by hardened-chromium to provide adblocking.
 %build
 # Get depot tools needed to build the thing
 unzip %{SOURCE0}
-export PATH="$PATH:$(pwd)/depot_tools"'
+ls -l
+DEPOT_PATH="$(pwd)/depot_tools"
+export PATH="$PATH:$DEPOT_PATH"
+echo $PATH
 # Get chromium's source
 tar -xf %{SOURCE1}
 cd chromium-%{version}
