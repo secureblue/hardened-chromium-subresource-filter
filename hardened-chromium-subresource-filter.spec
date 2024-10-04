@@ -1,15 +1,23 @@
+%global numjobs %{_smp_build_ncpus}
+%global build_target() \
+	export NINJA_STATUS="[%2:%f/%t] " ; \
+	ninja -j %{numjobs} -C '%1' '%2'
+%global chromium_pybin %{__python3}
+%global chromebuilddir out/Release
+
 # !!! UNDER CONSTRUCTION, WATCH YOUR STEP !!!
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
 Requires:  hardened-chromium
 License:   GPL-2.0
 Summary:   Subresource filter for hardened-chromium
-Version:   1.0
+# This doesn't need to be incremented often
+Version:   129.0.6668.89
 # Automatically generated version number, so that it doesn't need to be incremented manually
 %{lua: print("Release: "..os.time().."\n")}
 
 Source0: depot_tools.zip
-Source1: chromium.zip
+Source1: chromium-%{version}.tar.xz
 Source2: easylist.txt
 Source3: easyprivacy.txt
 
@@ -17,13 +25,19 @@ Source3: easyprivacy.txt
 Filters used by hardened-chromium to provide adblocking.
 
 %build
+# Get depot tools needed to build the thing
 unzip %{SOURCE0}
-export PATH="$PATH:$(pwd)/depot_tools"
-unzip %{SOURCE1}
-cd chromium/src
-ninja -C out/Release/ subresource_filter_tools
-cd ../../
-./chromium/src/out/Release/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
+export PATH="$PATH:$(pwd)/depot_tools"'
+# Get chromium's source
+tar -xf %{SOURCE1}
+cd chromium-%{version}
+mkdir -p %{chromebuilddir}
+# Build the converter tool
+gn --script-executable=%{chromium_pybin} gen %{chromebuilddir}
+%build_target %{chromebuilddir} subresource_filter_tools
+cd ../
+# Run the tool to generate the blocklist
+./chromium-%{version}/out/Release/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
 
 %install
 INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium"
