@@ -16,8 +16,8 @@ gn gen out/Release
 cd ../../
 
 # Compress for later use
-zip -r chromium.zip chromium
-zip -r depot_tools.zip depot_tools
+zip -r -q chromium.zip chromium
+zip -r -q depot_tools.zip depot_tools
 
 # Get the filters that will be added
 wget $LIST_SOURCES
