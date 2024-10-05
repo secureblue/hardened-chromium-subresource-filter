@@ -25,11 +25,38 @@ BuildRequires: python3
 BuildRequires: git
 BuildRequires: clang
 BuildRequires: clang-tools-extra
+BuildRequires: llvm
+BuildRequires: lld
+BuildRequires: rustc
 
 %description
 Filters used by hardened-chromium to provide adblocking.
 
 %build
+export CC=clang
+export CXX=clang++
+export AR=llvm-ar
+export NM=llvm-nm
+export READELF=llvm-readelf
+export CFLAGS
+export CXXFLAGS
+export LDFLAGS
+export RUSTFLAGS
+
+export RUSTC_BOOTSTRAP=1
+rustc_version="$(rustc --version)"
+rust_bindgen_root="%{_prefix}"
+
+# set clang version
+clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
+clang_base_path="$(clang --version | grep InstalledDir | cut -d' ' -f2 | sed 's#/bin##')"
+
+CHROMIUM_GN_DEFINES=""
+CHROMIUM_GN_DEFINES+=' is_clang=true'
+CHROMIUM_GN_DEFINES+=" clang_base_path=\"$clang_base_path\""
+CHROMIUM_GN_DEFINES+=" clang_version=\"$clang_version\""
+CHROMIUM_GN_DEFINES+=' clang_use_chrome_plugins=false'
+
 # Get depot tools needed to build the thing
 unzip %{SOURCE0}
 ls -l
@@ -41,7 +68,7 @@ tar -xf %{SOURCE1}
 cd chromium-%{version}
 mkdir -p %{chromebuilddir}
 # Build the converter tool
-gn --script-executable=%{chromium_pybin} gen %{chromebuilddir}
+gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 %build_target %{chromebuilddir} subresource_filter_tools
 cd ../
 # Run the tool to generate the blocklist
