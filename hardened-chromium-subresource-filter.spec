@@ -126,9 +126,9 @@ Filters used by hardened-chromium to provide adblocking.
 
 %build
 # Get chromium's source
-%setup -q -n chromium-%{version}
-#tar -xf %{SOURCE1}
-#cd chromium-%{version}
+#%setup -q -n chromium-%{version}
+tar -xf %{SOURCE1}
+cd chromium-%{version}
 mkdir -p %{chromebuilddir}
 
 # Get depot tools needed to build the thing
