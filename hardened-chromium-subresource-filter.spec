@@ -54,6 +54,7 @@ CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=" clang_base_path=\"$clang_base_path\""
 CHROMIUM_GN_DEFINES+=" clang_version=\"$clang_version\""
 CHROMIUM_GN_DEFINES+=' clang_use_chrome_plugins=false'
+export CHROMIUM_GN_DEFINES
 
 # Get depot tools needed to build the thing
 unzip %{SOURCE0}
