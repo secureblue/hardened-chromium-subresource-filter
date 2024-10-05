@@ -21,6 +21,8 @@ Source1: chromium-%{version}.tar.xz
 Source2: easylist.txt
 Source3: easyprivacy.txt
 
+BuildRequires: python3
+
 %description
 Filters used by hardened-chromium to provide adblocking.
 
