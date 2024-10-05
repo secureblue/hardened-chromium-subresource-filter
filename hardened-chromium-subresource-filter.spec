@@ -23,6 +23,8 @@ Source3: easyprivacy.txt
 
 BuildRequires: python3
 BuildRequires: git
+BuildRequires: clang
+BuildRequires: clang-tools-extra
 
 %description
 Filters used by hardened-chromium to provide adblocking.
