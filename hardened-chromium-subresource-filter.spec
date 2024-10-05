@@ -28,6 +28,8 @@ BuildRequires: clang-tools-extra
 BuildRequires: llvm
 BuildRequires: lld
 BuildRequires: rustc
+BuildRequires: bindgen-cli
+BuildRequires: compiler-rt
 
 %description
 Filters used by hardened-chromium to provide adblocking.
