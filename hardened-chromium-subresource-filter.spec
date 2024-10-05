@@ -31,8 +31,9 @@ BuildRequires: lld
 BuildRequires: rustc
 BuildRequires: bindgen-cli
 BuildRequires: compiler-rt
-
-Provides: bundled(protobuf) = 3.0.0.beta.3
+BuildRequires: protobuf-c
+BuildRequires: glib2-devel
+BuildRequires: glibc-devel
 
 %description
 Filters used by hardened-chromium to provide adblocking.
