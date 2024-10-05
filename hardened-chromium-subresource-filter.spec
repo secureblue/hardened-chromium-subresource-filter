@@ -16,8 +16,8 @@ Version:   129.0.6668.89
 # Automatically generated version number, so that it doesn't need to be incremented manually
 %{lua: print("Release: "..os.time().."\n")}
 
-Source0: depot_tools.zip
-Source1: chromium-%{version}.tar.xz
+Source0: chromium-%{version}.tar.xz
+Source1: depot_tools.zip
 Source2: easylist.txt
 Source3: easyprivacy.txt
 
@@ -125,6 +125,17 @@ BuildRequires: libevdev-devel
 Filters used by hardened-chromium to provide adblocking.
 
 %build
+# Get chromium's source
+%setup -q -n chromium-%{version}
+#tar -xf %{SOURCE1}
+#cd chromium-%{version}
+mkdir -p %{chromebuilddir}
+
+# Get depot tools needed to build the thing
+unzip %{SOURCE1}
+DEPOT_PATH="$(pwd)/depot_tools"
+export PATH="$PATH:$DEPOT_PATH"
+
 export CC=clang
 export CXX=clang++
 export AR=llvm-ar
@@ -155,16 +166,34 @@ CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' chrome_pgo_phase=0'
 export CHROMIUM_GN_DEFINES
 
-# Get depot tools needed to build the thing
-unzip %{SOURCE0}
-ls -l
-DEPOT_PATH="$(pwd)/depot_tools"
-export PATH="$PATH:$DEPOT_PATH"
-echo $PATH
-# Get chromium's source
-tar -xf %{SOURCE1}
-cd chromium-%{version}
-mkdir -p %{chromebuilddir}
+# use system libraries
+system_libs=()
+system_libs+=(brotli)
+system_libs+=(crc32c)
+system_libs+=(dav1d)
+system_libs+=(highway)
+system_libs+=(fontconfig)
+system_libs+=(ffmpeg)
+system_libs+=(freetype)
+system_libs+=(harfbuzz-ng)
+system_libs+=(libdrm)
+system_libs+=(libevent)
+system_libs+=(libjpeg)
+system_libs+=(libpng)
+system_libs+=(libusb)
+system_libs+=(libwebp)
+system_libs+=(libxml)
+system_libs+=(libxslt)
+system_libs+=(opus)
+system_libs+=(double-conversion)
+system_libs+=(libsecret)
+system_libs+=(libXNVCtrl)
+system_libs+=(flac)
+system_libs+=(zstd)
+system_libs+=(openh264)
+
+build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
+
 # Build the converter tool
 gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 %build_target %{chromebuilddir} subresource_filter_tools
