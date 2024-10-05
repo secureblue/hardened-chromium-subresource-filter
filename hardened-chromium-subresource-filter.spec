@@ -22,6 +22,7 @@ Source2: easylist.txt
 Source3: easyprivacy.txt
 
 BuildRequires: python3
+BuildRequires: git
 
 %description
 Filters used by hardened-chromium to provide adblocking.
