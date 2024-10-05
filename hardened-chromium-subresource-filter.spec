@@ -21,19 +21,105 @@ Source1: chromium-%{version}.tar.xz
 Source2: easylist.txt
 Source3: easyprivacy.txt
 
-BuildRequires: python3
-BuildRequires: git
+# Copy pasted from hardened-chromium.spec because yes
+BuildRequires: golang-github-evanw-esbuild
 BuildRequires: clang
-BuildRequires: clang-libs
 BuildRequires: clang-tools-extra
 BuildRequires: llvm
 BuildRequires: lld
 BuildRequires: rustc
 BuildRequires: bindgen-cli
+BuildRequires: libzstd-devel
+BuildRequires: pkgconfig(libavcodec)
+BuildRequires: pkgconfig(libavfilter)
+BuildRequires: pkgconfig(libavformat)
+BuildRequires: pkgconfig(libavutil)
+Conflicts: libavformat-free%{_isa} < 6.0.1
+Conflicts: ffmpeg-libs%{_isa} < 6.0.1-2
+BuildRequires: pkgconfig(openh264)
+BuildRequires:	alsa-lib-devel
+BuildRequires:	atk-devel
+BuildRequires:	bison
+BuildRequires:	cups-devel
+BuildRequires:	dbus-devel
+BuildRequires:	desktop-file-utils
+BuildRequires:	expat-devel
+BuildRequires:	flex
+BuildRequires:	fontconfig-devel
+BuildRequires:	glib2-devel
+BuildRequires:	glibc-devel
+BuildRequires:	gperf
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: compiler-rt
-BuildRequires: protobuf-c
-BuildRequires: glib2-devel
-BuildRequires: glibc-devel
+BuildRequires:	harfbuzz-devel >= 2.4.0
+BuildRequires: libatomic
+BuildRequires:	libcap-devel
+BuildRequires:	libcurl-devel
+BuildRequires:	libdrm-devel
+BuildRequires:	libgcrypt-devel
+BuildRequires:	libudev-devel
+BuildRequires:	libuuid-devel
+BuildRequires:	libusb-compat-0.1-devel
+BuildRequires:	libutempter-devel
+BuildRequires:	libXdamage-devel
+BuildRequires:	libXtst-devel
+BuildRequires:	xcb-proto
+BuildRequires:	mesa-libgbm-devel
+BuildRequires: nodejs
+BuildRequires: gn
+BuildRequires:	nss-devel >= 3.26
+BuildRequires:	pciutils-devel
+BuildRequires:	pulseaudio-libs-devel
+BuildRequires:	pipewire-devel
+BuildRequires: libappstream-glib
+
+# Fedora tries to use system libs whenever it can.
+BuildRequires:	bzip2-devel
+BuildRequires:	dbus-glib-devel
+# For eu-strip
+BuildRequires:	elfutils
+BuildRequires:	elfutils-libelf-devel
+BuildRequires:	flac-devel
+BuildRequires:	freetype-devel
+BuildRequires: google-crc32c-devel
+BuildRequires: libdav1d-devel
+BuildRequires: highway-devel
+BuildRequires: libsecret-devel
+BuildRequires: double-conversion-devel
+BuildRequires: libXNVCtrl-devel
+# One of the python scripts invokes git to look for a hash. So helpful.
+BuildRequires:	/usr/bin/git
+BuildRequires:	hwdata
+BuildRequires:	kernel-headers
+BuildRequires:	libevent-devel
+BuildRequires:	libffi-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpng-devel
+BuildRequires: openjpeg2-devel
+BuildRequires: lcms2-devel
+BuildRequires: libtiff-devel
+BuildRequires:	libudev-devel
+Requires: libusbx >= 1.0.21-0.1.git448584a
+BuildRequires: libusbx-devel >= 1.0.21-0.1.git448584a
+BuildRequires:	libva-devel
+BuildRequires:	libwebp-devel
+BuildRequires:	libxslt-devel
+BuildRequires:	libxshmfence-devel
+BuildRequires:	mesa-libGL-devel
+BuildRequires:	opus-devel
+BuildRequires: %{chromium_pybin}
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires: python3-jinja2
+BuildRequires: brotli-devel
+BuildRequires: speech-dispatcher-devel
+BuildRequires: yasm
+BuildRequires: zlib-devel
+BuildRequires:	systemd
+BuildRequires: ninja-build
+BuildRequires: libevdev-devel
 
 %description
 Filters used by hardened-chromium to provide adblocking.
@@ -61,6 +147,12 @@ CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=" clang_base_path=\"$clang_base_path\""
 CHROMIUM_GN_DEFINES+=" clang_version=\"$clang_version\""
 CHROMIUM_GN_DEFINES+=' clang_use_chrome_plugins=false'
+CHROMIUM_GN_DEFINES+=' use_lld=true'
+CHROMIUM_GN_DEFINES+=' rust_sysroot_absolute="%{_prefix}"'
+CHROMIUM_GN_DEFINES+=" rust_bindgen_root=\"$rust_bindgen_root\""
+CHROMIUM_GN_DEFINES+=" rustc_version=\"$rustc_version\""
+CHROMIUM_GN_DEFINES+=' use_sysroot=false'
+CHROMIUM_GN_DEFINES+=' chrome_pgo_phase=0'
 export CHROMIUM_GN_DEFINES
 
 # Get depot tools needed to build the thing
