@@ -24,6 +24,7 @@ Source3: easyprivacy.txt
 BuildRequires: python3
 BuildRequires: git
 BuildRequires: clang
+BuildRequires: clang-libs
 BuildRequires: clang-tools-extra
 BuildRequires: llvm
 BuildRequires: lld
