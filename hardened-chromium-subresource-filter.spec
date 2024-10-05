@@ -32,6 +32,8 @@ BuildRequires: rustc
 BuildRequires: bindgen-cli
 BuildRequires: compiler-rt
 
+Provides: bundled(protobuf) = 3.0.0.beta.3
+
 %description
 Filters used by hardened-chromium to provide adblocking.
 
@@ -51,6 +53,9 @@ clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
 clang_base_path="$(clang --version | grep InstalledDir | cut -d' ' -f2 | sed 's#/bin##')"
 
 CHROMIUM_GN_DEFINES=""
+CHROMIUM_GN_DEFINES+=' custom_toolchain="//build/toolchain/linux/unbundle:default"'
+CHROMIUM_GN_DEFINES+=' host_toolchain="//build/toolchain/linux/unbundle:default"'
+CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=" clang_base_path=\"$clang_base_path\""
 CHROMIUM_GN_DEFINES+=" clang_version=\"$clang_version\""
