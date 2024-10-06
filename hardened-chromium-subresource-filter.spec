@@ -31,6 +31,7 @@ BuildRequires: cups-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libudev-devel
 BuildRequires: dbus-devel
+libdrm-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: /usr/bin/git
 
