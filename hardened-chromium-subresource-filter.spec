@@ -127,7 +127,7 @@ Filters used by hardened-chromium to provide adblocking.
 
 %prep
 %setup -q -n chromium-%{version}
-%setup -q -n %{SOURCE1}
+unzip %{SOURCE1}
 
 %build
 DEPOT_PATH="$(pwd)/depot_tools"
