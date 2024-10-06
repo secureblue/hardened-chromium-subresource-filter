@@ -22,12 +22,15 @@ Source2: easyprivacy.txt
 
 BuildRequires: lld
 BuildRequires: rustc
+BuildRequires: cups-devel
 BuildRequires: glib2-devel
 BuildRequires: glibc-devel
 BuildRequires: gn
 BuildRequires: ninja-build
 BuildRequires: nss-devel >= 3.26
 BuildRequires: %{chromium_pybin}
+BuildRequires: libXNVCtrl-devel
+BuildRequires: xcb-proto
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: /usr/bin/git
 
