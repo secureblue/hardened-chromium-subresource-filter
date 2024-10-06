@@ -124,12 +124,11 @@ BuildRequires: libevdev-devel
 %description
 Filters used by hardened-chromium to provide adblocking.
 
+
 %build
 # Get chromium's source
 #%setup -q -n chromium-%{version}
 tar -xf %{SOURCE0}
-cd chromium-%{version}
-mkdir -p %{chromebuilddir}
 
 # Get depot tools needed to build the thing
 unzip %{SOURCE1}
@@ -194,12 +193,13 @@ system_libs+=(openh264)
 
 build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
 
-cp -a %{_bindir}/gn %{chromebuilddir}/
+
+mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 
 # Build the converter tool
 %{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 %build_target %{chromebuilddir} subresource_filter_tools
-cd ../
+
 # Run the tool to generate the blocklist
 ./chromium-%{version}/out/Release/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
 
