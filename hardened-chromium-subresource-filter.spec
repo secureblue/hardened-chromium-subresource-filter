@@ -185,6 +185,10 @@ cp %{SOURCE2} .
 ./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt --output_file=hardened-chromium-blocklist
 cp hardened-chromium-blocklist ../
 
+# Cleanup
+cd ../
+rm -r chromium-%{version}
+
 %install
 INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium"
 mkdir -p "$INSTALL_DIR"
