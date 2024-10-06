@@ -35,6 +35,7 @@ BuildRequires: libdrm-devel
 BuildRequires: atk-devel
 BuildRequires: libcurl-devel
 BuildRequires: at-spi2-atk-devel
+BuildRequires: pango-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: /usr/bin/git
 
