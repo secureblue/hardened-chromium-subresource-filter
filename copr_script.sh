@@ -9,8 +9,8 @@ readonly NAME="hardened-chromium-subresource-filter"
 readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 
 # Get chromium's source and depot tools
-git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-zip -r -q depot_tools.zip depot_tools
+#git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+#zip -r -q depot_tools.zip depot_tools
 wget $CHROMIUM_SOURCE_URL $CHROMIUM_SOURCE_URL.hashes
 cat $CHROMIUM_TAR.hashes | grep "$(sha384sum $CHROMIUM_TAR)"
 if [ "$?" == 1 ]; then
