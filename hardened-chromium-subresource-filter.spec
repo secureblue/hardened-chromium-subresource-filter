@@ -180,7 +180,9 @@ mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 %build_target %{chromebuilddir} subresource_filter_tools
 
 # Run the tool to generate the blocklist
-./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
+cp %{SOURCE1} .
+cp %{SOURCE3} .
+./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt --output_file=hardened-chromium-blocklist
 cp hardened-chromium-blocklist ../
 
 %install
