@@ -136,12 +136,16 @@ FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration -Wno-unkn
 
 CFLAGS="$FLAGS"
 CXXFLAGS="$FLAGS"
+LDFLAGS="$LDFLAGS -Wl,-z,pack-relative-relocs"
 
 export CC=clang
 export CXX=clang++
 export AR=llvm-ar
 export NM=llvm-nm
 export READELF=llvm-readelf
+export CFLAGS
+export CXXFLAGS
+export LDFLAGS
 
 export RUSTC_BOOTSTRAP=1
 rustc_version="$(rustc --version)"
