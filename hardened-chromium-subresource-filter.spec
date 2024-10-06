@@ -20,17 +20,15 @@ Source0: chromium-%{version}.tar.xz
 Source1: easylist.txt
 Source2: easyprivacy.txt
 
-BuildRequires: lld
-BuildRequires: rustc
-BuildRequires: cups-devel
-BuildRequires: glib2-devel
-BuildRequires: glibc-devel
 BuildRequires: gn
 BuildRequires: ninja-build
+BuildRequires: lld
+BuildRequires: rustc
 BuildRequires: nss-devel >= 3.26
+BuildRequires: glib2-devel
 BuildRequires: %{chromium_pybin}
-BuildRequires: libXNVCtrl-devel
-BuildRequires: xcb-proto
+BuildRequires: cups-devel
+BuildRequires: libxkbcommon
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: /usr/bin/git
 
