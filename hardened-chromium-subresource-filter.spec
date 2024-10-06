@@ -191,8 +191,6 @@ system_libs+=(flac)
 system_libs+=(zstd)
 system_libs+=(openh264)
 
-build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
-
 
 mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 
