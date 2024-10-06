@@ -20,113 +20,26 @@ Source0: chromium-%{version}.tar.xz
 Source1: easylist.txt
 Source2: easyprivacy.txt
 
-# Copy pasted from hardened-chromium.spec because yes
-BuildRequires: golang-github-evanw-esbuild
-BuildRequires: clang
-BuildRequires: clang-tools-extra
-BuildRequires: llvm
 BuildRequires: lld
 BuildRequires: rustc
-BuildRequires: bindgen-cli
-BuildRequires: libzstd-devel
-BuildRequires: pkgconfig(libavcodec)
-BuildRequires: pkgconfig(libavfilter)
-BuildRequires: pkgconfig(libavformat)
-BuildRequires: pkgconfig(libavutil)
-Conflicts: libavformat-free%{_isa} < 6.0.1
-Conflicts: ffmpeg-libs%{_isa} < 6.0.1-2
-BuildRequires: pkgconfig(openh264)
-BuildRequires:	alsa-lib-devel
-BuildRequires:	atk-devel
-BuildRequires:	bison
-BuildRequires:	cups-devel
-BuildRequires:	dbus-devel
-BuildRequires:	desktop-file-utils
-BuildRequires:	expat-devel
-BuildRequires:	flex
-BuildRequires:	fontconfig-devel
-BuildRequires:	glib2-devel
-BuildRequires:	glibc-devel
-BuildRequires:	gperf
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Widgets)
-BuildRequires: pkgconfig(Qt6Core)
-BuildRequires: pkgconfig(Qt6Widgets)
-BuildRequires: compiler-rt
-BuildRequires:	harfbuzz-devel >= 2.4.0
-BuildRequires: libatomic
-BuildRequires:	libcap-devel
-BuildRequires:	libcurl-devel
-BuildRequires:	libdrm-devel
-BuildRequires:	libgcrypt-devel
-BuildRequires:	libudev-devel
-BuildRequires:	libuuid-devel
-BuildRequires:	libusb-compat-0.1-devel
-BuildRequires:	libutempter-devel
-BuildRequires:	libXdamage-devel
-BuildRequires:	libXtst-devel
-BuildRequires:	xcb-proto
-BuildRequires:	mesa-libgbm-devel
-BuildRequires: nodejs
+BuildRequires: glib2-devel
+BuildRequires: glibc-devel
 BuildRequires: gn
-BuildRequires:	nss-devel >= 3.26
-BuildRequires:	pciutils-devel
-BuildRequires:	pulseaudio-libs-devel
-BuildRequires:	pipewire-devel
-BuildRequires: libappstream-glib
-
-# Fedora tries to use system libs whenever it can.
-BuildRequires:	bzip2-devel
-BuildRequires:	dbus-glib-devel
-# For eu-strip
-BuildRequires:	elfutils
-BuildRequires:	elfutils-libelf-devel
-BuildRequires:	flac-devel
-BuildRequires:	freetype-devel
-BuildRequires: google-crc32c-devel
-BuildRequires: libdav1d-devel
-BuildRequires: highway-devel
-BuildRequires: libsecret-devel
-BuildRequires: double-conversion-devel
-BuildRequires: libXNVCtrl-devel
-# One of the python scripts invokes git to look for a hash. So helpful.
-BuildRequires:	/usr/bin/git
-BuildRequires:	hwdata
-BuildRequires:	kernel-headers
-BuildRequires:	libevent-devel
-BuildRequires:	libffi-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel
-BuildRequires: openjpeg2-devel
-BuildRequires: lcms2-devel
-BuildRequires: libtiff-devel
-BuildRequires:	libudev-devel
-Requires: libusbx >= 1.0.21-0.1.git448584a
-BuildRequires: libusbx-devel >= 1.0.21-0.1.git448584a
-BuildRequires:	libva-devel
-BuildRequires:	libwebp-devel
-BuildRequires:	libxslt-devel
-BuildRequires:	libxshmfence-devel
-BuildRequires:	mesa-libGL-devel
-BuildRequires:	opus-devel
-BuildRequires: %{chromium_pybin}
-BuildRequires:	pkgconfig(gtk+-3.0)
-BuildRequires: python3-jinja2
-BuildRequires: brotli-devel
-BuildRequires: speech-dispatcher-devel
-BuildRequires: yasm
-BuildRequires: zlib-devel
-BuildRequires:	systemd
 BuildRequires: ninja-build
-BuildRequires: libevdev-devel
+BuildRequires: nss-devel >= 3.26
+BuildRequires: %{chromium_pybin}
+# One of the python scripts invokes git to look for a hash. So helpful.
+BuildRequires: /usr/bin/git
+
 
 %description
-Filters used by hardened-chromium to provide adblocking.
+Filter used by hardened-chromium to provide content blocking.
 
 
 %prep
 
 %setup -q -n chromium-%{version}
+
 
 %build
 
@@ -136,7 +49,7 @@ FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration -Wno-unkn
 
 CFLAGS="$FLAGS"
 CXXFLAGS="$FLAGS"
-LDFLAGS="-Wl,-z,now -Wl,-z,pack-relative-relocs -Wl,--build-id=sha1"
+LDFLAGS="-Wl,-z,now -Wl,-z,pack-relative-relocs"
 
 export CC=clang
 export CXX=clang++
@@ -152,8 +65,6 @@ rustc_version="$(rustc --version)"
 rust_bindgen_root="%{_prefix}"
 
 # set clang version
-#clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
-#clang_base_path="$(clang --version | grep InstalledDir | cut -d' ' -f2 | sed 's#/bin##')"
 clang_version="20"
 clang_base_path="$(pwd)/third_party/llvm-build/Release+Asserts/"
 
@@ -182,19 +93,22 @@ mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 # Run the tool to generate the blocklist
 cp %{SOURCE1} .
 cp %{SOURCE2} .
-./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt --output_file=hardened-chromium-blocklist
+./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt --output_file=hardened-chromium-blocklist > /dev/null
 cp hardened-chromium-blocklist ../
 
 # Cleanup
-cd ../
-rm -r chromium-%{version}
+rm -r %{chromebuilddir}
+
 
 %install
+
 INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium"
 mkdir -p "$INSTALL_DIR"
 install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
 
+
 %post
+
 if [ -d "/home/" ]; then
 	cd /home && USERS=*
 	INSTALL_DIR="%{_sysconfdir}/chromium"
@@ -226,6 +140,7 @@ EOF
 fi
 echo "Done"
 
+
 %preun
 if [ -d "/home/" ]; then
 	cd /home && USERS=*
@@ -238,6 +153,7 @@ if [ -d "/home/" ]; then
 		fi
 	done
 fi
+
 
 %files
 %{_sysconfdir}/chromium/hardened-chromium-blocklist
