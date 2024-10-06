@@ -194,8 +194,10 @@ system_libs+=(openh264)
 
 build/linux/unbundle/replace_gn_files.py --system-libraries ${system_libs[@]}
 
+cp -a %{_bindir}/gn %{chromebuilddir}/
+
 # Build the converter tool
-gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
+%{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 %build_target %{chromebuilddir} subresource_filter_tools
 cd ../
 # Run the tool to generate the blocklist
