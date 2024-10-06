@@ -136,7 +136,7 @@ FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration -Wno-unkn
 
 CFLAGS="$FLAGS"
 CXXFLAGS="$FLAGS"
-LDFLAGS="$LDFLAGS -Wl,-z,pack-relative-relocs"
+LDFLAGS="-Wl,-z,now -Wl,-z,pack-relative-relocs -Wl,--build-id=sha1"
 
 export CC=clang
 export CXX=clang++
@@ -180,7 +180,8 @@ mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 %build_target %{chromebuilddir} subresource_filter_tools
 
 # Run the tool to generate the blocklist
-./chromium-%{version}/out/Release/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
+./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=%{SOURCE2},%{SOURCE3} --output_file=hardened-chromium-blocklist
+cp hardened-chromium-blocklist ../
 
 %install
 INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium"
