@@ -17,9 +17,8 @@ Version:   129.0.6668.89
 %{lua: print("Release: "..os.time().."\n")}
 
 Source0: chromium-%{version}.tar.xz
-Source1: depot_tools.zip
-Source2: easylist.txt
-Source3: easyprivacy.txt
+Source1: easylist.txt
+Source2: easyprivacy.txt
 
 # Copy pasted from hardened-chromium.spec because yes
 BuildRequires: golang-github-evanw-esbuild
@@ -126,12 +125,10 @@ Filters used by hardened-chromium to provide adblocking.
 
 
 %prep
+
 %setup -q -n chromium-%{version}
-unzip %{SOURCE1}
 
 %build
-DEPOT_PATH="$(pwd)/depot_tools"
-export PATH="$PATH:$DEPOT_PATH"
 
 export CC=clang
 export CXX=clang++
@@ -144,8 +141,10 @@ rustc_version="$(rustc --version)"
 rust_bindgen_root="%{_prefix}"
 
 # set clang version
-clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
-clang_base_path="$(clang --version | grep InstalledDir | cut -d' ' -f2 | sed 's#/bin##')"
+#clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
+#clang_base_path="$(clang --version | grep InstalledDir | cut -d' ' -f2 | sed 's#/bin##')"
+clang_version="20"
+clang_base_path="third_party/llvm-build/Release+Asserts/"
 
 CHROMIUM_GN_DEFINES=""
 CHROMIUM_GN_DEFINES+=' custom_toolchain="//build/toolchain/linux/unbundle:default"'
@@ -162,33 +161,6 @@ CHROMIUM_GN_DEFINES+=" rustc_version=\"$rustc_version\""
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' chrome_pgo_phase=0'
 export CHROMIUM_GN_DEFINES
-
-# use system libraries
-system_libs=()
-system_libs+=(brotli)
-system_libs+=(crc32c)
-system_libs+=(dav1d)
-system_libs+=(highway)
-system_libs+=(fontconfig)
-system_libs+=(ffmpeg)
-system_libs+=(freetype)
-system_libs+=(harfbuzz-ng)
-system_libs+=(libdrm)
-system_libs+=(libevent)
-system_libs+=(libjpeg)
-system_libs+=(libpng)
-system_libs+=(libusb)
-system_libs+=(libwebp)
-system_libs+=(libxml)
-system_libs+=(libxslt)
-system_libs+=(opus)
-system_libs+=(double-conversion)
-system_libs+=(libsecret)
-system_libs+=(libXNVCtrl)
-system_libs+=(flac)
-system_libs+=(zstd)
-system_libs+=(openh264)
-
 
 mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 
