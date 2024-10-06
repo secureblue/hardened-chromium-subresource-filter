@@ -125,13 +125,11 @@ BuildRequires: libevdev-devel
 Filters used by hardened-chromium to provide adblocking.
 
 
-%build
-# Get chromium's source
-#%setup -q -n chromium-%{version}
-tar -xf %{SOURCE0}
+%prep
+%setup -q -n chromium-%{version}
+%setup -q -n %{SOURCE1}
 
-# Get depot tools needed to build the thing
-unzip %{SOURCE1}
+%build
 DEPOT_PATH="$(pwd)/depot_tools"
 export PATH="$PATH:$DEPOT_PATH"
 
