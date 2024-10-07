@@ -140,7 +140,7 @@ if [ -d "/home/" ]; then
 				echo "Removing '$OLD_DIR/Subresource Filter'"
 				rm -r "$OLD_DIR/Subresource Filter"
 			fi
-			NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/%{release}.%{version}"
+			NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/%{release}.0"
 			echo "Creating '$NEW_DIR'"
 			mkdir -p "$NEW_DIR"
 			echo "Adding filter list from '$INSTALL_DIR'"
