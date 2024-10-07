@@ -1,9 +1,7 @@
 #! /bin/bash -x
 
 # Preset variables
-readonly CHROMIUM_VERSION="129.0.6668.89" # update this every now-and-again
-readonly CHROMIUM_TAR="chromium-$CHROMIUM_VERSION.tar.xz"
-readonly CHROMIUM_SOURCE_URL="https://commondatastorage.googleapis.com/chromium-browser-official/$CHROMIUM_TAR"
+readonly VERSION="129.0.6668.89" # update this every now-and-again
 readonly LIST_SOURCES="https://easylist.to/easylist/easylist.txt https://easylist.to/easylist/easyprivacy.txt"
 readonly NAME="hardened-chromium-subresource-filter"
 readonly GIT_URL="https://github.com/secureblue/$NAME.git"
@@ -12,9 +10,9 @@ readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 git clone $GIT_URL
 cp $NAME/$NAME.spec ./
 cp $NAME/chromium-latest.py ./
-python3 ./chromium-latest.py --version $CHROMIUM_VERSION --stable --cleansources
-rm chromium-$CHROMIUM_VERSION.tar.xz
-rm -rf ./chromium-$CHROMIUM_VERSION
+python3 ./chromium-latest.py --version $VERSION --stable --cleansources
+rm chromium-$VERSION.tar.xz
+rm -rf ./chromium-$VERSION
 rm -rf ./$NAME
 
 # Get the filters that will be added
