@@ -12,7 +12,7 @@ readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 git clone $GIT_URL
 cp $NAME/$NAME.spec ./
 cp $NAME/chromium-latest.py ./
-python3 ./chromium-latest.py --version $CHROMIUM_VERSION --stable --ffmpegclean --ffmpegarm --cleansources
+python3 ./chromium-latest.py --version $CHROMIUM_VERSION --stable --cleansources
 rm chromium-$CHROMIUM_VERSION.tar.xz
 rm -rf ./chromium-$CHROMIUM_VERSION
 rm -rf ./$NAME
