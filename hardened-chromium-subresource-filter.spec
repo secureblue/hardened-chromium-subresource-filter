@@ -16,7 +16,7 @@ Version:   129.0.6668.89
 # Automatically generated version number, so that it doesn't need to be incremented manually
 %{lua: print("Release: "..os.time().."\n")}
 
-Source0: chromium-%{version}.tar.xz
+Source0: chromium-%{version}-clean.tar.xz
 Source1: easylist.txt
 Source2: easyprivacy.txt
 
