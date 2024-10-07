@@ -151,7 +151,7 @@ if [ -d "/home/" ]; then
   "manifest_version": 2,
   "name": "Subresource Filtering Rules",
   "ruleset_format": 1,
-  "version": "%{release}.%{version}"
+  "version": "%{release}.0"
 }
 EOF
 			chown -R $USER "$OLD_DIR"
