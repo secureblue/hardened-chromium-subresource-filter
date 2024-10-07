@@ -41,7 +41,10 @@ BuildRequires: gtk3-devel
 BuildRequires: mesa-libGL-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: /usr/bin/git
-
+BuildRequires: pkgconfig(Qt5Core)
+BuildRequires: pkgconfig(Qt5Widgets)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Widgets)
 
 %description
 Filter used by hardened-chromium to provide content blocking.
