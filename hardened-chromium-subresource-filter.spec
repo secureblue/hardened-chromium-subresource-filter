@@ -20,8 +20,11 @@ Source0: chromium-%{version}.tar.xz
 Source1: easylist.txt
 Source2: easyprivacy.txt
 
+# Dependencies required
 BuildRequires: gn
 BuildRequires: ninja-build
+BuildRequires: clang
+BuildRequires: llvm
 BuildRequires: lld
 BuildRequires: rustc
 BuildRequires: nss-devel >= 3.26
@@ -46,6 +49,7 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
+
 
 %description
 Filter used by hardened-chromium to provide content blocking.
