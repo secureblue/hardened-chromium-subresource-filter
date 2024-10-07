@@ -49,6 +49,7 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
+BuildRequires: libatomic
 
 
 %description
