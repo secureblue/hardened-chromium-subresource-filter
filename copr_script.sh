@@ -8,19 +8,11 @@ readonly LIST_SOURCES="https://easylist.to/easylist/easylist.txt https://easylis
 readonly NAME="hardened-chromium-subresource-filter"
 readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 
-# Get chromium's source and depot tools
-wget $CHROMIUM_SOURCE_URL $CHROMIUM_SOURCE_URL.hashes
-cat $CHROMIUM_TAR.hashes | grep "$(sha384sum $CHROMIUM_TAR)"
-if [ "$?" == 1 ]; then
-	echo "ERROR! Checksum for $CHROMIUM_TAR doesn't match!"
-	exit 1
-else
-	echo "Checksum for $CHROMIUM_TAR verified."
-fi
+# Clone the repo with the spec file and chrowmium source downloader
+git clone $GIT_URL
+cp $NAME/$NAME.spec ./
+cp $NAME/chromium-latest.py ./
+python3 ./chromium-latest.py --version $CHROMIUM_VERSION --stable --ffmpegclean --ffmpegarm --cleansources
 
 # Get the filters that will be added
 wget $LIST_SOURCES
-
-# Clone the repo with spec file
-git clone $GIT_URL
-cp $NAME/$NAME.spec ./
