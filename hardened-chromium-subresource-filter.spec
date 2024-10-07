@@ -37,6 +37,7 @@ BuildRequires: libcurl-devel
 BuildRequires: at-spi2-atk-devel
 BuildRequires: pango-devel
 BuildRequires: mesa-libgbm-devel
+BuildRequires: gtk3-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: /usr/bin/git
 
