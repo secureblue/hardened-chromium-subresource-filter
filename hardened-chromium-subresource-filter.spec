@@ -45,6 +45,7 @@ BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: libva-devel
 
 %description
 Filter used by hardened-chromium to provide content blocking.
