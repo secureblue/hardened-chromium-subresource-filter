@@ -13,6 +13,9 @@ git clone $GIT_URL
 cp $NAME/$NAME.spec ./
 cp $NAME/chromium-latest.py ./
 python3 ./chromium-latest.py --version $CHROMIUM_VERSION --stable --ffmpegclean --ffmpegarm --cleansources
+rm chromium-$CHROMIUM_VERSION.tar.xz
+rm -rf ./chromium-$CHROMIUM_VERSION
+rm -rf ./$NAME
 
 # Get the filters that will be added
 wget $LIST_SOURCES
