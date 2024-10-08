@@ -19,6 +19,7 @@ Version:   129.0.6668.89
 Source0: chromium-%{version}-clean.tar.xz
 Source1: easylist.txt
 Source2: easyprivacy.txt
+Source3: install_filter.sh
 
 # Dependencies required
 BuildRequires: gn
@@ -51,17 +52,14 @@ BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
 BuildRequires: libatomic
 
-
 %description
 Filter used by hardened-chromium to provide content blocking.
 
-
 %prep
-
 %setup -q -n chromium-%{version}
 
-
 %build
+cp %{SOURCE3} ../
 
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
 FLAGS+=' -Wno-unused-but-set-variable -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
@@ -119,61 +117,19 @@ cp hardened-chromium-blocklist ../
 # Cleanup
 rm -r %{chromebuilddir}
 
-
 %install
-
-INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium"
+INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium/filter"
+SCRIPT_DIR="%{buildroot}%{_libdir}/chromium-browser/"
 mkdir -p "$INSTALL_DIR"
+mkdir -p "$SCRIPT_DIR"
 install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
+install -m 0755 install_filter.sh "$SCRIPT_DIR/install_filter.sh"
+echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
+chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 
-
-%post
-
-if [ -d "/home/" ]; then
-	cd /home && USERS=*
-	INSTALL_DIR="%{_sysconfdir}/chromium"
-	for USER in $USERS; do
-		OLD_DIR="/home/$USER/.config/chromium"
-		echo "Checking for '$OLD_DIR'"
-		if [ -d "$OLD_DIR" ]; then
-			if [ -d "$OLD_DIR/Subresource Filter" ]; then
-				echo "Removing '$OLD_DIR/Subresource Filter'"
-				rm -r "$OLD_DIR/Subresource Filter"
-			fi
-			NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/%{release}.0"
-			echo "Creating '$NEW_DIR'"
-			mkdir -p "$NEW_DIR"
-			echo "Adding filter list from '$INSTALL_DIR'"
-			cp "$INSTALL_DIR/hardened-chromium-blocklist" "$NEW_DIR/Filtering Rules"
-			echo "Creating 'manifest.json'"
-			cat << EOF > "$NEW_DIR/manifest.json"
-{
-  "manifest_version": 2,
-  "name": "Subresource Filtering Rules",
-  "ruleset_format": 1,
-  "version": "%{release}.0"
-}
-EOF
-			chown -R $USER "$OLD_DIR"
-		fi
-	done
-fi
-echo "Done"
-
-
-%preun
-if [ -d "/home/" ]; then
-	cd /home && USERS=*
-	for USER in $USERS; do
-		DIR="/home/$USER/.config/chromium/Subresource Filter"
-		echo "Checking for '$DIR'"
-		if [ -d "$DIR" ] && [ $1 -lt 2 ]; then
-			echo "Clearing: '$DIR'"
-			rm -rf "$DIR"
-		fi
-	done
-fi
-
+%postun
+rm -r %{_sysconfdir}/chromium/filter
 
 %files
-%{_sysconfdir}/chromium/hardened-chromium-blocklist
+%{_sysconfdir}/chromium/filter/hardened-chromium-blocklist
+%{_libdir}/chromium-browser/install_filter.sh
