@@ -9,6 +9,7 @@ readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 # Clone the repo with the spec file and chrowmium source downloader
 git clone $GIT_URL
 cp $NAME/$NAME.spec ./
+cp $NAME/install_filter.sh ./
 cp $NAME/chromium-latest.py ./
 python3 ./chromium-latest.py --version $VERSION --stable --cleansources
 rm chromium-$VERSION.tar.xz
