@@ -59,7 +59,6 @@ Filter used by hardened-chromium to provide content blocking.
 %setup -q -n chromium-%{version}
 
 %build
-cp %{SOURCE3} ../
 
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
 FLAGS+=' -Wno-unused-but-set-variable -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
@@ -123,7 +122,7 @@ SCRIPT_DIR="%{buildroot}%{_libdir}/chromium-browser/"
 mkdir -p "$INSTALL_DIR"
 mkdir -p "$SCRIPT_DIR"
 install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
-install -m 0755 install_filter.sh "$SCRIPT_DIR/install_filter.sh"
+install -m 0755 %{SOURCE3} "$SCRIPT_DIR/install_filter.sh"
 echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 
