@@ -131,4 +131,5 @@ rm -r %{_sysconfdir}/chromium/filter
 
 %files
 %{_sysconfdir}/chromium/filter/hardened-chromium-blocklist
+%{_sysconfdir}/chromium/filter/hardened-chromium-blocklist-version.txt
 %{_libdir}/chromium-browser/install_filter.sh
