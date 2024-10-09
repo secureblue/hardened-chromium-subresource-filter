@@ -4,10 +4,8 @@
 readonly VERSION="129.0.6668.100" # update this every now-and-again
 readonly LIST_SOURCES="https://easylist.to/easylist/easylist.txt https://easylist.to/easylist/easyprivacy.txt"
 readonly NAME="hardened-chromium-subresource-filter"
-readonly GIT_URL="https://github.com/secureblue/$NAME.git"
 
 # Clone the repo with the spec file and chrowmium source downloader
-git clone $GIT_URL
 cp $NAME/$NAME.spec ./
 cp $NAME/install_filter.sh ./
 cp $NAME/chromium-latest.py ./
