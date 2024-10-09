@@ -3,7 +3,7 @@
 # Some variables
 readonly INSTALL_DIR="/etc/chromium/filter"
 readonly OLD_DIR="$HOME/.config/chromium"
-readonly FILTER_VER="$(cat $INSTALL_DIR/filter/hardened-chromium-blocklist-version.txt)"
+readonly FILTER_VER="$(cat $INSTALL_DIR/hardened-chromium-blocklist-version.txt)"
 readonly CURRENT_VER="$(ls $OLD_DIR/Subresource\ Filter/Unindexed\ Rules)"
 
 echo "Checking version" # Debug statement
