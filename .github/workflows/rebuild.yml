@@ -1,7 +1,7 @@
-name: Daily rebuild
+name: Rebuild
 on:
   schedule:
-    - cron: "00 2 * * *" # build at 2:00 UTC every day, three hours before secureblue
+    - cron: "00 2 */3 * *" # build at 2:00 UTC every third day, three hours before secureblue
       
   workflow_dispatch: # allow manually triggering builds
 jobs:
