@@ -11,4 +11,4 @@ jobs:
     steps:
         - name: Use curl to ping webhook
           run: | 
-            curl -X POST ${{ secrets.COPR_WEBHOOK }}
+            curl -X POST ${{ secrets.COPR_WEBHOOK }} > /dev/null 2>&1
