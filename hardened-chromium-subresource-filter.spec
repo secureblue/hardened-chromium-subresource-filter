@@ -126,9 +126,6 @@ install -m 0755 %{SOURCE3} "$SCRIPT_DIR/install_filter.sh"
 echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 
-%postun
-rmdir %{_sysconfdir}/chromium/filter
-
 %files
 %{_sysconfdir}/chromium/filter/hardened-chromium-blocklist
 %{_sysconfdir}/chromium/filter/hardened-chromium-blocklist-version.txt
