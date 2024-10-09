@@ -127,7 +127,7 @@ echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 
 %postun
-rm -r %{_sysconfdir}/chromium/filter
+rmdir %{_sysconfdir}/chromium/filter
 
 %files
 %{_sysconfdir}/chromium/filter/hardened-chromium-blocklist
