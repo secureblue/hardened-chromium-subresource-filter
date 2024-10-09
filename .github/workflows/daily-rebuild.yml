@@ -1,0 +1,14 @@
+name: Daily rebuild
+on:
+  schedule:
+    - cron: "00 2 * * *" # build at 2:00 UTC every day, three hours before secureblue
+      
+  workflow_dispatch: # allow manually triggering builds
+jobs:
+  webhook:
+    name: Ping copr webhook
+    runs-on: ubuntu-latest
+    steps:
+        - name: Use curl to ping webhook
+          run: | 
+            curl -X POST ${{ secrets.COPR_WEBHOOK }}
