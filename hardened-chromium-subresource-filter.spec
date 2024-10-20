@@ -17,9 +17,32 @@ Version:   130.0.6723.58
 %{lua: print("Release: "..os.time().."\n")}
 
 Source0: chromium-%{version}-clean.tar.xz
-Source1: easylist.txt
-Source2: easyprivacy.txt
-Source3: install_filter.sh
+Source1: install_filter.sh
+Source2: easylist.txt
+Source3: easyprivacy.txt
+Source4: fanboy-annoyance.txt
+Source5: abpindo.txt
+Source6: abpvn-IPl6HE.txt
+Source7: adblock_bg.txt
+Source8: NordicFiltersABP-Inclusion.txt
+Source9: easylistchina.txt
+Source10: filters.txt
+Source11: easylistdutch.txt
+Source12: easylistgermany.txt
+Source13: EasyListHebrew.txt
+Source14: easylistitaly.txt
+Source15: easylistlithuania.txt
+Source16: easylistpolish.txt
+Source17: easylistportuguese.txt
+Source18: easylistspanish.txt
+Source19: indianlist.txt
+Source20: koreanlist.txt
+Source21: latvian-list.txt
+Source22: liste_ar.txt
+Source23: liste_fr.txt
+Source24: rolist.txt
+Source25: ruadlist.txt
+Source26: antiadblockfilters.txt
 
 # Dependencies required
 BuildRequires: gn
@@ -108,9 +131,61 @@ mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 %build_target %{chromebuilddir} subresource_filter_tools
 
 # Run the tool to generate the blocklist
-cp %{SOURCE1} .
 cp %{SOURCE2} .
-./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt --output_file=hardened-chromium-blocklist > /dev/null
+cp %{SOURCE3} .
+cp %{SOURCE4} .
+cp %{SOURCE5} .
+cp %{SOURCE6} .
+cp %{SOURCE7} .
+cp %{SOURCE8} .
+cp %{SOURCE9} .
+cp %{SOURCE10} .
+cp %{SOURCE11} .
+cp %{SOURCE12} .
+cp %{SOURCE13} .
+cp %{SOURCE14} .
+cp %{SOURCE15} .
+cp %{SOURCE16} .
+cp %{SOURCE17} .
+cp %{SOURCE18} .
+cp %{SOURCE19} .
+cp %{SOURCE20} .
+cp %{SOURCE21} .
+cp %{SOURCE22} .
+cp %{SOURCE23} .
+cp %{SOURCE24} .
+cp %{SOURCE25} .
+cp %{SOURCE26} .
+
+./%{chromebuilddir}/ruleset_converter \
+  --input_format=filter-list \
+  --output_format=unindexed-ruleset \
+  --input_files=\
+    easylist.txt,\
+    easyprivacy.txt,\
+    fanboy-annoyance.txt,\
+    abpindo.txt,\
+    abpvn-IPl6HE.txt,\
+    adblock_bg.txt,\
+    NordicFiltersABP-Inclusion.txt,\
+    easylistchina.txt,\
+    filters.txt,\
+    easylistdutch.txt,\
+    easylistgermany.txt,\
+    easylistitaly.txt,\
+    easylistlithuania.txt,\
+    easylistpolish.txt,\
+    easylistportuguese.txt,\
+    easylistspanish.txt,\
+    indianlist.txt,\
+    koreanlist.txt,\
+    latvian-list.txt,\
+    liste_ar.txt,\
+    liste_fr.txt,\
+    rolist.txt,\
+    ruadlist.txt,\
+    antiadblockfilters.txt \
+  --output_file=hardened-chromium-blocklist > /dev/null
 cp hardened-chromium-blocklist ../
 
 # Cleanup
@@ -122,7 +197,7 @@ SCRIPT_DIR="%{buildroot}%{_libdir}/chromium-browser/"
 mkdir -p "$INSTALL_DIR"
 mkdir -p "$SCRIPT_DIR"
 install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
-install -m 0755 %{SOURCE3} "$SCRIPT_DIR/install_filter.sh"
+install -m 0755 %{SOURCE1} "$SCRIPT_DIR/install_filter.sh"
 echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 
