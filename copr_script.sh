@@ -35,7 +35,7 @@ readonly NAME="hardened-chromium-subresource-filter"
 cp $NAME/$NAME.spec ./
 cp $NAME/install_filter.sh ./
 cp $NAME/chromium-latest.py ./
-cp /usr/src/chromium/chromium-$version-clean.tar.xz ./
+cp /usr/src/chromium/chromium-*-clean.tar.xz ./chromium-$version-clean.tar.xz
 rm -rf ./$NAME
 
 # Get the filters that will be added
