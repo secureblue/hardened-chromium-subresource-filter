@@ -5,14 +5,13 @@
 %global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 
-# !!! UNDER CONSTRUCTION, WATCH YOUR STEP !!!
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
 Requires:  hardened-chromium
 License:   GPL-2.0
 Summary:   Subresource filter for hardened-chromium
 # This doesn't need to be incremented often
-Version:   130.0.6723.58
+Version:   130.0.6723.91
 # Automatically generated version number, so that it doesn't need to be incremented manually
 %{lua: print("Release: "..os.time().."\n")}
 
