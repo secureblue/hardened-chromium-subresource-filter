@@ -5,7 +5,6 @@
 %global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 
-# !!! UNDER CONSTRUCTION, WATCH YOUR STEP !!!
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
 Requires:  hardened-chromium
