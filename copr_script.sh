@@ -1,7 +1,7 @@
 #! /bin/bash -x
 
 # Preset variables
-readonly VERSION="130.0.6723.58" # update this every now-and-again
+readonly VERSION="130.0.6723.91" # update this every now-and-again
 readonly LIST_SOURCES=(
     "https://easylist.to/easylist/easylist.txt"
     "https://easylist.to/easylist/easyprivacy.txt"
@@ -35,7 +35,7 @@ readonly NAME="hardened-chromium-subresource-filter"
 cp $NAME/$NAME.spec ./
 cp $NAME/install_filter.sh ./
 cp $NAME/chromium-latest.py ./
-cp /usr/src/chromium/chromium-*-clean.tar.xz ./chromium-$version-clean.tar.xz
+cp /usr/src/chromium/chromium-$version-clean.tar.xz ./
 rm -rf ./$NAME
 
 # Get the filters that will be added
