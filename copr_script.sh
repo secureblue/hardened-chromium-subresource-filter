@@ -27,6 +27,7 @@ readonly LIST_SOURCES=(
     "https://zoso.ro/pages/rolist.txt"
     "https://easylist-downloads.adblockplus.org/ruadlist.txt"
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
+    "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/SerboCroatianList.txt"
 )
 readonly NAME="hardened-chromium-subresource-filter"
 
