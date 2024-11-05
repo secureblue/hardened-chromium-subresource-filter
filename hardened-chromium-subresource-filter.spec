@@ -42,6 +42,7 @@ Source23: liste_fr.txt
 Source24: rolist.txt
 Source25: ruadlist.txt
 Source26: antiadblockfilters.txt
+Source27: SerboCroatianList.txt
 
 # Dependencies required
 BuildRequires: gn
@@ -155,8 +156,9 @@ cp %{SOURCE23} .
 cp %{SOURCE24} .
 cp %{SOURCE25} .
 cp %{SOURCE26} .
+cp %{SOURCE27} .
 
-./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt,fanboy-annoyance.txt,abpindo.txt,abpvn-IPl6HE.txt,adblock_bg.txt,NordicFiltersABP-Inclusion.txt,easylistchina.txt,filters.txt,easylistdutch.txt,easylistgermany.txt,EasyListHebrew.txt,easylistitaly.txt,easylistlithuania.txt,easylistpolish.txt,easylistportuguese.txt,easylistspanish.txt,indianlist.txt,koreanlist.txt,latvian-list.txt,liste_ar.txt,liste_fr.txt,rolist.txt,ruadlist.txt,antiadblockfilters.txt --output_file=hardened-chromium-blocklist > /dev/null
+./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt,fanboy-annoyance.txt,abpindo.txt,abpvn-IPl6HE.txt,adblock_bg.txt,NordicFiltersABP-Inclusion.txt,easylistchina.txt,filters.txt,easylistdutch.txt,easylistgermany.txt,EasyListHebrew.txt,easylistitaly.txt,easylistlithuania.txt,easylistpolish.txt,easylistportuguese.txt,easylistspanish.txt,indianlist.txt,koreanlist.txt,latvian-list.txt,liste_ar.txt,liste_fr.txt,rolist.txt,ruadlist.txt,antiadblockfilters.txt,SerboCroatianList.txt --output_file=hardened-chromium-blocklist > /dev/null
 cp hardened-chromium-blocklist ../
 
 # Cleanup
