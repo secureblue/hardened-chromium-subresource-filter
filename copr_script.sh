@@ -29,6 +29,7 @@ readonly LIST_SOURCES=(
     "https://easylist-downloads.adblockplus.org/antiadblockfilters.txt"
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/refs/heads/master/SerboCroatianList.txt"
     "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_7_Japanese/filter.txt"
 )
 readonly NAME="hardened-chromium-subresource-filter"
 
