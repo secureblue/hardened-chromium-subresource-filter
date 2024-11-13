@@ -11,7 +11,7 @@ Requires:  hardened-chromium
 License:   GPL-2.0
 Summary:   Subresource filter for hardened-chromium
 # This doesn't need to be incremented often
-Version:   130.0.6723.116
+Version:   131.0.6778.69
 # Automatically generated version number, so that it doesn't need to be incremented manually
 %{lua: print("Release: "..os.time().."\n")}
 
