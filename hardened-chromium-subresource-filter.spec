@@ -129,7 +129,7 @@ for filter in %{_sourcedir}/filter-*.txt; do
 done
 filters=""
 for filter in filter-*.txt; do
-	filters+="$filter,"
+	filters="$filters$filter,"
 done
 
 # Run the tool to generate the blocklist
