@@ -5,17 +5,20 @@
 %global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 
+Source0: chromium-version.txt
+
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
 Requires:  hardened-chromium
 License:   GPL-2.0
 Summary:   Subresource filter for hardened-chromium
-# This doesn't need to be incremented often
-Version:   131.0.6778.69
-# Automatically generated version number, so that it doesn't need to be incremented manually
-%{lua: print("Release: "..os.time().."\n")}
+%{lua:
+       local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
+       local content = f:read "*all"
+       print("Version: "..content.."\nRelease: "..os.time().."\n")
+}
 
-Source0: chromium-%{version}-clean.tar.xz
+Source69: chromium-%{version}-clean.tar.xz
 Source1: install_filter.sh
 Source2: easylist.txt
 Source3: easyprivacy.txt
