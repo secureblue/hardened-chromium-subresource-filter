@@ -15,6 +15,7 @@ Summary:   Subresource filter for hardened-chromium
 %{lua:
        local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
        local content = f:read "*all"
+       rpm.execute("echo", content)
        print("Version: "..content.."\nRelease: "..os.time().."\n")
 }
 
