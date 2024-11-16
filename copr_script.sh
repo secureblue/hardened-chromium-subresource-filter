@@ -44,6 +44,7 @@ cp /usr/src/chromium/chromium-*-clean.tar.xz ./
 rm -rf ./$NAME
 
 # Get the filters that will be added
+counter=0
 for url in "${LIST_SOURCES[@]}"; do
-    wget "$url"
+    wget "$url" -O filter-$counter.txt
 done
