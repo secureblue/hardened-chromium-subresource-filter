@@ -87,7 +87,7 @@ LDFLAGS="-Wl,-z,now -Wl,-z,pack-relative-relocs"
 export CC=clang
 export CXX=clang++
 export AR=llvm-ar
-export NM=llvm-nmfilters = 
+export NM=llvm-nm
 export READELF=llvm-readelf
 export CFLAGS
 export CXXFLAGS
