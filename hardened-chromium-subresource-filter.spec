@@ -5,7 +5,7 @@
 %global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 
-Source0: chromium-version.txt
+Source69: chromium-version.txt
 
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
@@ -19,7 +19,7 @@ Summary:   Subresource filter for hardened-chromium
        print("Version: "..content.."\nRelease: "..os.time().."\n")
 }
 
-Source69: chromium-%{version}-clean.tar.xz
+Source0: chromium-%{version}-clean.tar.xz
 Source1: install_filter.sh
 Source2: easylist.txt
 Source3: easyprivacy.txt
