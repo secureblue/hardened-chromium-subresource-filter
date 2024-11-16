@@ -128,7 +128,7 @@ for filter in %{_sourcedir}/filter-*.txt; do
 	cp $filter .
 done
 filters=""
-for filter in %{_sourcedir}/filter-*.txt; do
+for filter in filter-*.txt; do
 	filters+="$filter,"
 done
 
