@@ -47,5 +47,5 @@ rm -rf ./$NAME
 counter=1
 for url in "${LIST_SOURCES[@]}"; do
     wget "$url" -O filter-$counter.txt
-    counter=$counter+1
+    counter=$((counter+1))
 done
