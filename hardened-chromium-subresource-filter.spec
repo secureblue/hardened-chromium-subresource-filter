@@ -20,6 +20,7 @@ Summary:   Subresource filter for hardened-chromium
 }
 
 Source0: chromium-%{version}-clean.tar.xz
+Source1: install_filter.sh
 %{lua:
     if posix.getenv("HOME") == "/builddir" then
         filters = rpm.glob('/builddir/build/SOURCES/filter-*.txt')
