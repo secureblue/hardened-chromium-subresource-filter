@@ -1,5 +1,8 @@
 #! /bin/bash -x
 
+wget https://versionhistory.googleapis.com/v1/chrome/platforms/linux/channels/stable/versions/all/releases?filter=endtime=none -O chromium-version.json
+cat chromium-version.json | grep \"version\" | grep -oh "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" > chromium-version.txt
+
 # Preset variables
 readonly LIST_SOURCES=(
     "https://easylist.to/easylist/easylist.txt"
@@ -41,6 +44,8 @@ cp /usr/src/chromium/chromium-*-clean.tar.xz ./
 rm -rf ./$NAME
 
 # Get the filters that will be added
+counter=1
 for url in "${LIST_SOURCES[@]}"; do
-    wget "$url"
+    wget "$url" -O filter-$counter.txt
+    counter=$((counter+1))
 done

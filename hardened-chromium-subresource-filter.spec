@@ -5,46 +5,38 @@
 %global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 
+Source69: chromium-version.txt
+
 Name:      hardened-chromium-subresource-filter
 BuildArch: noarch
 Requires:  hardened-chromium
 License:   GPL-2.0
 Summary:   Subresource filter for hardened-chromium
-# This doesn't need to be incremented often
-Version:   131.0.6778.69
-# Automatically generated version number, so that it doesn't need to be incremented manually
-%{lua: print("Release: "..os.time().."\n")}
+%{lua:
+       local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
+       local content = f:read "*all"
+       rpm.execute("echo", content)
+       print("Version: "..content.."\nRelease: "..os.time().."\n")
+}
 
 Source0: chromium-%{version}-clean.tar.xz
 Source1: install_filter.sh
-Source2: easylist.txt
-Source3: easyprivacy.txt
-Source4: fanboy-annoyance.txt
-Source5: abpindo.txt
-Source6: abpvn-IPl6HE.txt
-Source7: adblock_bg.txt
-Source8: NordicFiltersABP-Inclusion.txt
-Source9: easylistchina.txt
-Source10: filters.txt
-Source11: easylistdutch.txt
-Source12: easylistgermany.txt
-Source13: EasyListHebrew.txt
-Source14: easylistitaly.txt
-Source15: easylistlithuania.txt
-Source16: easylistpolish.txt
-Source17: easylistportuguese.txt
-Source18: easylistspanish.txt
-Source19: indianlist.txt
-Source20: koreanlist.txt
-Source21: latvian-list.txt
-Source22: liste_ar.txt
-Source23: liste_fr.txt
-Source24: rolist.txt
-Source25: ruadlist.txt
-Source26: antiadblockfilters.txt
-Source27: SerboCroatianList.txt
-Source28: Frellwits-Swedish-Filter.txt
-Source29: filter.txt
+%{lua:
+    if posix.getenv("HOME") == "/builddir" then
+        filters = rpm.glob('/builddir/build/SOURCES/filter-*.txt')
+    else
+        filters = rpm.glob(macros['_sourcedir']..'/filter-*.txt')
+    end
+    local count = 1
+    for f in ipairs(filters) do
+        os.execute("echo 'Adding source in "..filters[f].."'")
+        printSource = "Source"..count+1..": filter-"..count..".txt"
+        rpm.execute("echo", printSource)
+        print(printSource.."\n")
+        count = count + 1
+    end
+    rpm.define("_filterCount "..count-1)
+}
 
 # Dependencies required
 BuildRequires: gn
@@ -132,37 +124,17 @@ mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
 %{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 %build_target %{chromebuilddir} subresource_filter_tools
 
-# Run the tool to generate the blocklist
-cp %{SOURCE2} .
-cp %{SOURCE3} .
-cp %{SOURCE4} .
-cp %{SOURCE5} .
-cp %{SOURCE6} .
-cp %{SOURCE7} .
-cp %{SOURCE8} .
-cp %{SOURCE9} .
-cp %{SOURCE10} .
-cp %{SOURCE11} .
-cp %{SOURCE12} .
-cp %{SOURCE13} .
-cp %{SOURCE14} .
-cp %{SOURCE15} .
-cp %{SOURCE16} .
-cp %{SOURCE17} .
-cp %{SOURCE18} .
-cp %{SOURCE19} .
-cp %{SOURCE20} .
-cp %{SOURCE21} .
-cp %{SOURCE22} .
-cp %{SOURCE23} .
-cp %{SOURCE24} .
-cp %{SOURCE25} .
-cp %{SOURCE26} .
-cp %{SOURCE27} .
-cp %{SOURCE28} .
-cp %{SOURCE29} .
+# copy the filters over and generate the string of said filters
+for filter in %{_sourcedir}/filter-*.txt; do
+	cp $filter .
+done
+filters=""
+for filter in filter-*.txt; do
+	filters="$filters$filter,"
+done
 
-./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=easylist.txt,easyprivacy.txt,fanboy-annoyance.txt,abpindo.txt,abpvn-IPl6HE.txt,adblock_bg.txt,NordicFiltersABP-Inclusion.txt,easylistchina.txt,filters.txt,easylistdutch.txt,easylistgermany.txt,EasyListHebrew.txt,easylistitaly.txt,easylistlithuania.txt,easylistpolish.txt,easylistportuguese.txt,easylistspanish.txt,indianlist.txt,koreanlist.txt,latvian-list.txt,liste_ar.txt,liste_fr.txt,rolist.txt,ruadlist.txt,antiadblockfilters.txt,SerboCroatianList.txt,Frellwits-Swedish-Filter.txt,filter.txt --output_file=hardened-chromium-blocklist > /dev/null
+# Run the tool to generate the blocklist
+./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=${filters::-1} --output_file=hardened-chromium-blocklist > /dev/null
 cp hardened-chromium-blocklist ../
 
 # Cleanup
