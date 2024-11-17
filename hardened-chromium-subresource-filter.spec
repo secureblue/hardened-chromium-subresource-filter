@@ -29,8 +29,9 @@ Source1: install_filter.sh
     end
     local count = 1
     for f in ipairs(filters) do
+    	local altcount=count+1
         os.execute("echo 'Adding source in "..filters[f].."'")
-        printSource = "Source"..count+1..": filter-"..count..".txt"
+        printSource = "Source"..altcount..": filter-"..count..".txt"
         rpm.execute("echo", printSource)
         print(printSource.."\n")
         count = count + 1
