@@ -142,8 +142,8 @@ cp hardened-chromium-blocklist ../
 rm -r %{chromebuilddir}
 
 %install
-INSTALL_DIR="%{buildroot}%{_sysconfdir}/chromium/filter"
-SCRIPT_DIR="%{buildroot}%{_libdir}/chromium-browser/"
+INSTALL_DIR="%{buildroot}%{_sysconfdir}/hardened-chromium/filter"
+SCRIPT_DIR="%{buildroot}%{_libdir}/hardened-chromium/"
 mkdir -p "$INSTALL_DIR"
 mkdir -p "$SCRIPT_DIR"
 install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
@@ -152,6 +152,6 @@ echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
 
 %files
-%{_sysconfdir}/chromium/filter/hardened-chromium-blocklist
-%{_sysconfdir}/chromium/filter/hardened-chromium-blocklist-version.txt
-%{_libdir}/chromium-browser/install_filter.sh
+%{_sysconfdir}/hardened-chromium/filter/hardened-chromium-blocklist
+%{_sysconfdir}/hardened-chromium/filter/hardened-chromium-blocklist-version.txt
+%{_libdir}/hardened-chromium/install_filter.sh
