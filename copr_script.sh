@@ -39,7 +39,6 @@ readonly NAME="trivalent-subresource-filter"
 # Clone the repo with the spec file and chrowmium source downloader
 cp $NAME/$NAME.spec ./
 cp $NAME/install_filter.sh ./
-cp $NAME/chromium-latest.py ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
 rm -rf ./$NAME
 
