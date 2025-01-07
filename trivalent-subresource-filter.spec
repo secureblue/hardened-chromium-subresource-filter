@@ -4,14 +4,15 @@
 	ninja -j %{numjobs} -C '%1' '%2'
 %global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
+%global chromium_name trivalent
 
 Source69: chromium-version.txt
 
-Name:      hardened-chromium-subresource-filter
+Name:      %{chromium_name}-subresource-filter
 BuildArch: noarch
-Requires:  hardened-chromium
+Requires:  %{chromium_name}
 License:   GPL-2.0
-Summary:   Subresource filter for hardened-chromium
+Summary:   Subresource filter for %{chromium_name}
 %{lua:
        local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
        local content = f:read "*all"
@@ -71,7 +72,7 @@ BuildRequires: libva-devel
 BuildRequires: libatomic
 
 %description
-Filter used by hardened-chromium to provide content blocking.
+Filter used by %{chromium_name} to provide content blocking.
 
 %prep
 %setup -q -n chromium-%{version}
@@ -135,23 +136,23 @@ for filter in filter-*.txt; do
 done
 
 # Run the tool to generate the blocklist
-./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=${filters::-1} --output_file=hardened-chromium-blocklist > /dev/null
-cp hardened-chromium-blocklist ../
+./%{chromebuilddir}/ruleset_converter --input_format=filter-list --output_format=unindexed-ruleset --input_files=${filters::-1} --output_file=%{chromium_name}-blocklist > /dev/null
+cp %{chromium_name}-blocklist ../
 
 # Cleanup
 rm -r %{chromebuilddir}
 
 %install
-INSTALL_DIR="%{buildroot}%{_sysconfdir}/hardened-chromium/filter"
-SCRIPT_DIR="%{buildroot}%{_libdir}/hardened-chromium/"
+INSTALL_DIR="%{buildroot}%{_sysconfdir}/%{chromium_name}/filter"
+SCRIPT_DIR="%{buildroot}%{_libdir}/%{chromium_name}/"
 mkdir -p "$INSTALL_DIR"
 mkdir -p "$SCRIPT_DIR"
-install -m 0644 hardened-chromium-blocklist "$INSTALL_DIR/hardened-chromium-blocklist"
+install -m 0644 %{chromium_name}-blocklist "$INSTALL_DIR/%{chromium_name}-blocklist"
 install -m 0755 %{SOURCE1} "$SCRIPT_DIR/install_filter.sh"
-echo "%{release}" > $INSTALL_DIR/hardened-chromium-blocklist-version.txt
-chmod a+r $INSTALL_DIR/hardened-chromium-blocklist-version.txt
+echo "%{release}" > $INSTALL_DIR/%{chromium_name}-blocklist-version.txt
+chmod a+r $INSTALL_DIR/%{chromium_name}-blocklist-version.txt
 
 %files
-%{_sysconfdir}/hardened-chromium/filter/hardened-chromium-blocklist
-%{_sysconfdir}/hardened-chromium/filter/hardened-chromium-blocklist-version.txt
-%{_libdir}/hardened-chromium/install_filter.sh
+%{_sysconfdir}/%{chromium_name}/filter/%{chromium_name}-blocklist
+%{_sysconfdir}/%{chromium_name}/filter/%{chromium_name}-blocklist-version.txt
+%{_libdir}/%{chromium_name}/install_filter.sh
