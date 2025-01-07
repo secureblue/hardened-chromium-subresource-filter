@@ -1,9 +1,9 @@
 #! /bin/bash
 
 # Some variables
-readonly INSTALL_DIR="/etc/chromium/filter"
+readonly INSTALL_DIR="/etc/trivalent/filter"
 readonly OLD_DIR="$HOME/.config/chromium"
-readonly FILTER_VER="$(cat $INSTALL_DIR/hardened-chromium-blocklist-version.txt)"
+readonly FILTER_VER="$(cat $INSTALL_DIR/trivalent-blocklist-version.txt)"
 readonly CURRENT_VER="$(ls $OLD_DIR/Subresource\ Filter/Unindexed\ Rules)"
 
 echo "Checking version" # Debug statement
@@ -21,7 +21,7 @@ rm -r "$OLD_DIR/Subresource Filter"
 echo "Creating '$NEW_DIR'" # Debug statement
 mkdir -p "$NEW_DIR"
 echo "Adding filter list from '$INSTALL_DIR'" # Debug statement
-cp "$INSTALL_DIR/hardened-chromium-blocklist" "$NEW_DIR/Filtering Rules"
+cp "$INSTALL_DIR/trivalent-blocklist" "$NEW_DIR/Filtering Rules"
 echo "Creating 'manifest.json'"
 cat << EOF > "$NEW_DIR/manifest.json"
 {
