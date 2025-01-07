@@ -34,7 +34,7 @@ readonly LIST_SOURCES=(
     "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt"
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_7_Japanese/filter.txt"
 )
-readonly NAME="hardened-chromium-subresource-filter"
+readonly NAME="trivalent-subresource-filter"
 
 # Clone the repo with the spec file and chrowmium source downloader
 cp $NAME/$NAME.spec ./
