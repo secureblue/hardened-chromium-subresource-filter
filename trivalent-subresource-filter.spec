@@ -70,6 +70,7 @@ BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
 BuildRequires: libatomic
+BuildRequires: rust-bindgen-devel
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
