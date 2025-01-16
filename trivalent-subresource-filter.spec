@@ -17,7 +17,11 @@ Summary:   Subresource filter for %{chromium_name}
        local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
        local content = f:read "*all"
        rpm.execute("echo", content)
-       print("Version: "..content.."\nRelease: "..os.time().."\n")
+       -- This will dynamically set the version based on chromium's latest stable release channel
+       print("Version: "..content.."\n")
+
+       -- This will automatically increment the release every ~16 minutes
+       print("Release: "..(os.time() // 1000).."\n")
 }
 
 Source0: chromium-%{version}-clean.tar.xz
