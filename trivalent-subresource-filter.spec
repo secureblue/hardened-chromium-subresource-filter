@@ -72,6 +72,7 @@ BuildRequires: libva-devel
 BuildRequires: libatomic
 BuildRequires: rust-bindgen-devel
 BuildRequires: bindgen-cli
+BuildRequires: clang-devel
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
