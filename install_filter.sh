@@ -2,7 +2,7 @@
 
 # Some variables
 readonly INSTALL_DIR="/etc/trivalent/filter"
-readonly OLD_DIR="$HOME/.config/chromium"
+readonly OLD_DIR="$HOME/.config/trivalent"
 readonly FILTER_VER="$(cat $INSTALL_DIR/trivalent-blocklist-version.txt)"
 readonly CURRENT_VER="$(ls $OLD_DIR/Subresource\ Filter/Unindexed\ Rules)"
 
