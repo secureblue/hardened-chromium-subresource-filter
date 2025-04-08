@@ -1,5 +1,5 @@
 diff --git a/build/config/clang/BUILD.gn b/build/config/clang/BUILD.gn
-index 3b561e9b0c0a9..b892584dbf23c 100644
+index 3b561e9b0c0a9..2bddbd82de21a 100644
 --- a/build/config/clang/BUILD.gn
 +++ b/build/config/clang/BUILD.gn
 @@ -166,8 +166,9 @@ template("clang_lib") {
@@ -31,7 +31,7 @@ index 3b561e9b0c0a9..b892584dbf23c 100644
 +        } else if (current_cpu == "arm") {
 +          _dir = "armhf-redhat-linux-gnu"
 +          _suffix = "-armhf"
-+       } else if (current_cpu == "ppc64") {
++        } else if (current_cpu == "ppc64") {
 +          _dir = "ppc64le-redhat-linux-gnu"
 +          _suffix = "-ppc64le"
 +        } else {
