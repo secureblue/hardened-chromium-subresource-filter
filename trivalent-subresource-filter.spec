@@ -89,8 +89,8 @@ Filter used by %{chromium_name} to provide content blocking.
 
 %prep
 %setup -q -n chromium-%{version}
-%patch -P358 -p1 -b .rust-clang_lib
 %patch -P359 -p1 -b .use-clang19-cflag
+
 %build
 
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
