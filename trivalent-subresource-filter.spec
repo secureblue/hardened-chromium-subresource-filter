@@ -11,7 +11,7 @@ Source69: chromium-version.txt
 Name:      %{chromium_name}-subresource-filter
 BuildArch: noarch
 Requires:  %{chromium_name}
-License:   GPL-2.0
+License:   Apache-2.0
 Summary:   Subresource filter for %{chromium_name}
 %{lua:
        local f = io.open(macros['_sourcedir']..'/chromium-version.txt', 'r')
