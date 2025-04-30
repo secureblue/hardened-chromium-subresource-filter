@@ -52,10 +52,7 @@ Patch359: use-clang19-cflag.patch
 # Dependencies required
 BuildRequires: gn
 BuildRequires: ninja-build
-BuildRequires: clang
-BuildRequires: llvm
 BuildRequires: lld
-BuildRequires: rustc
 BuildRequires: nss-devel >= 3.26
 BuildRequires: glib2-devel
 BuildRequires: %{chromium_pybin}
@@ -92,7 +89,6 @@ Filter used by %{chromium_name} to provide content blocking.
 %patch -P359 -p1 -b .use-clang19-cflag
 
 %build
-
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
 FLAGS+=' -Wno-unused-but-set-variable -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
 FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration -Wno-unknown-attributes -Wno-unknown-pragmas'
@@ -111,30 +107,20 @@ export CXXFLAGS
 export LDFLAGS
 
 export RUSTC_BOOTSTRAP=1
-export RUST_BACKTRACE=full
-rustc_version="$(rustc --version)"
-rust_bindgen_root="%{_prefix}"
 
-# # set clang version
-clang_version="$(clang --version | sed -n 's/clang version //p' | cut -d. -f1)"
-%if 0%{?fedora} > 41
-clang_base_path="$(PATH=/usr/bin:/usr/sbin which clang | sed 's#/bin/.*##')"
-%else
-clang_base_path="$(clang --version | grep InstalledDir | cut -d' ' -f2 | sed 's#/bin##')"
-%endif
+# add internal clang for build
+PATH="$PATH:$(pwd)/third_party/llvm-build/Release+Asserts/bin"
+
+# add internal rust utils for build
+PATH="$PATH:$(pwd)/third_party/rust-toolchain/bin"
+
+export PATH
 
 CHROMIUM_GN_DEFINES=""
-CHROMIUM_GN_DEFINES+=' custom_toolchain="//build/toolchain/linux/unbundle:default"'
-CHROMIUM_GN_DEFINES+=' host_toolchain="//build/toolchain/linux/unbundle:default"'
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
-CHROMIUM_GN_DEFINES+=" clang_base_path=\"$clang_base_path\""
-CHROMIUM_GN_DEFINES+=" clang_version=\"$clang_version\""
 CHROMIUM_GN_DEFINES+=' clang_use_chrome_plugins=false'
 CHROMIUM_GN_DEFINES+=' use_lld=true'
-CHROMIUM_GN_DEFINES+=' rust_sysroot_absolute="%{_prefix}"'
-CHROMIUM_GN_DEFINES+=" rust_bindgen_root=\"$rust_bindgen_root\""
-CHROMIUM_GN_DEFINES+=" rustc_version=\"$rustc_version\""
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' chrome_pgo_phase=0'
 export CHROMIUM_GN_DEFINES
