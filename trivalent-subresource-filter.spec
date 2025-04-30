@@ -46,13 +46,11 @@ Source1: install_filter.sh
 
 
 # set clang_lib path
-Patch358: chromium-127-rust-clanglib.patch
 Patch359: use-clang19-cflag.patch
 
 # Dependencies required
 BuildRequires: gn
 BuildRequires: ninja-build
-BuildRequires: lld
 BuildRequires: nss-devel >= 3.26
 BuildRequires: glib2-devel
 BuildRequires: %{chromium_pybin}
@@ -76,10 +74,6 @@ BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
 BuildRequires: libatomic
-BuildRequires: rust-bindgen-devel
-BuildRequires: bindgen-cli
-BuildRequires: clang-devel
-BuildRequires: compiler-rt
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
