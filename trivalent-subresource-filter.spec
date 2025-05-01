@@ -49,8 +49,6 @@ Source1: install_filter.sh
 Patch359: use-clang19-cflag.patch
 
 # Dependencies required
-BuildRequires: gn
-BuildRequires: ninja-build
 BuildRequires: nss-devel >= 3.26
 BuildRequires: glib2-devel
 BuildRequires: %{chromium_pybin}
@@ -66,21 +64,20 @@ BuildRequires: pango-devel
 BuildRequires: mesa-libgbm-devel
 BuildRequires: gtk3-devel
 BuildRequires: mesa-libGL-devel
-# One of the python scripts invokes git to look for a hash. So helpful.
-BuildRequires: /usr/bin/git
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
 BuildRequires: libatomic
+# One of the python scripts invokes git to look for a hash. So helpful.
+BuildRequires: /usr/bin/git
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
 
 %prep
 %setup -q -n chromium-%{version}
-%patch -P359 -p1 -b .use-clang19-cflag
 
 %build
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
@@ -102,11 +99,17 @@ export LDFLAGS
 
 export RUSTC_BOOTSTRAP=1
 
-# add internal clang for build
+# add internal clang to PATH for build
 PATH="$PATH:$(pwd)/third_party/llvm-build/Release+Asserts/bin"
 
-# add internal rust utils for build
+# add internal rust utils to PATH for build
 PATH="$PATH:$(pwd)/third_party/rust-toolchain/bin"
+
+# add internal nodejs to PATH for build
+PATH="$PATH:$(pwd)/third_party/node/linux/node-linux-x64/bin
+
+# add internal ninja to PATH for build
+PATH="$PATH:$(pwd)/third_party/ninja/
 
 export PATH
 
@@ -114,12 +117,11 @@ CHROMIUM_GN_DEFINES=""
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=' clang_use_chrome_plugins=false'
-CHROMIUM_GN_DEFINES+=' use_lld=true'
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' chrome_pgo_phase=0'
 export CHROMIUM_GN_DEFINES
 
-mkdir -p %{chromebuilddir} && cp -a %{_bindir}/gn %{chromebuilddir}/
+mkdir -p %{chromebuilddir} && cp -a buildtools/linux64/gn %{chromebuilddir}/
 
 # Build the converter tool
 %{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
