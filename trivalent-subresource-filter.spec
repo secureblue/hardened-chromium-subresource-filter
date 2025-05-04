@@ -71,7 +71,7 @@ BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
 BuildRequires: libatomic
 # One of the python scripts invokes git to look for a hash. So helpful.
-BuildRequires: /usr/bin/git
+BuildRequires: git-core
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
@@ -116,9 +116,7 @@ export PATH
 CHROMIUM_GN_DEFINES=""
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
-CHROMIUM_GN_DEFINES+=' clang_use_chrome_plugins=false'
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
-CHROMIUM_GN_DEFINES+=' chrome_pgo_phase=0'
 export CHROMIUM_GN_DEFINES
 
 mkdir -p %{chromebuilddir} && cp -a buildtools/linux64/gn %{chromebuilddir}/
