@@ -45,9 +45,6 @@ Source1: install_filter.sh
 }
 
 
-# set clang_lib path
-Patch359: use-clang19-cflag.patch
-
 # Dependencies required
 BuildRequires: nss-devel >= 3.26
 BuildRequires: glib2-devel
