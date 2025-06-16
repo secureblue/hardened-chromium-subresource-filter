@@ -10,21 +10,28 @@
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-name: Rebuild
-permissions: {}
+name: GitHub Actions Security Analysis with zizmor 🌈
+
 on:
-  schedule:
-    - cron: "00 2 */3 * *" # build at 2:00 UTC every third day, three hours before secureblue
-      
-  workflow_dispatch: # allow manually triggering builds
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["**"]
+
+permissions: {}
+
 jobs:
-  webhook:
-    name: Ping copr webhook
+  zizmor:
     runs-on: ubuntu-24.04
+    permissions:
+      security-events: write
     steps:
-        - name: Use curl to ping webhook
-          shell: bash
-          env:
-            COPR_WEBHOOK: ${{ secrets.COPR_WEBHOOK }}
-          run: | 
-            curl -X POST "${COPR_WEBHOOK}" > /dev/null 2>&1
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Run zizmor 🌈
+        uses: zizmorcore/zizmor-action@f52a838cfabf134edcbaa7c8b3677dde20045018 # v0.1.1
+        with:
+          persona: auditor
