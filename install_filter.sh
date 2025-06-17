@@ -12,10 +12,14 @@
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-readonly INSTALL_DIR="/etc/trivalent/filter"
-readonly OLD_DIR="$HOME/.config/trivalent"
-readonly FILTER_VER="$(cat $INSTALL_DIR/trivalent-blocklist-version.txt)"
-readonly CURRENT_VER="$(ls $OLD_DIR/Subresource\ Filter/Unindexed\ Rules)"
+INSTALL_DIR="/etc/trivalent/filter"
+readonly INSTALL_DIR
+OLD_DIR="$HOME/.config/trivalent"
+readonly OLD_DIR
+FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
+readonly FILTER_VER
+CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
+readonly CURRENT_VER
 
 echo "Checking Subresource Filter version..."
 echo "  Installed version: $CURRENT_VER"

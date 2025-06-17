@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and limitations under the License.
 
 wget https://versionhistory.googleapis.com/v1/chrome/platforms/linux/channels/stable/versions/all/releases?filter=endtime=none -O chromium-version.json
-cat chromium-version.json | grep \"version\" | grep -oh "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" > chromium-version.txt
+grep \"version\" chromium-version.json | grep -oh "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" > chromium-version.txt
 
 # Preset variables
 readonly LIST_SOURCES=(
@@ -49,16 +49,16 @@ readonly LIST_SOURCES=(
 readonly NAME="trivalent-subresource-filter"
 
 # Clone the repo with the spec file and chromium source downloader
-cp $NAME/fedora_patches/chromium-127-rust-clanglib.patch ./
-cp $NAME/patches/use-clang19-cflag.patch ./
-cp $NAME/$NAME.spec ./
-cp $NAME/install_filter.sh ./
+cp "$NAME/fedora_patches/chromium-127-rust-clanglib.patch" ./
+cp "$NAME/patches/use-clang19-cflag.patch" ./
+cp "$NAME/$NAME.spec" ./
+cp "$NAME/install_filter.sh" ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
-rm -rf ./$NAME
+rm -rf "./$NAME"
 
 # Get the filters that will be added
 counter=1
 for url in "${LIST_SOURCES[@]}"; do
-    wget "$url" -O filter-$counter.txt
+    wget "$url" -O "filter-$counter.txt"
     counter=$((counter+1))
 done

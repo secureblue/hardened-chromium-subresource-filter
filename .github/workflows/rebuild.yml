@@ -21,10 +21,11 @@ jobs:
   webhook:
     name: Ping copr webhook
     runs-on: ubuntu-24.04
+    permissions: {}
     steps:
-        - name: Use curl to ping webhook
-          shell: bash
-          env:
-            COPR_WEBHOOK: ${{ secrets.COPR_WEBHOOK }}
-          run: | 
-            curl -X POST "${COPR_WEBHOOK}" > /dev/null 2>&1
+      - name: Use curl to ping webhook
+        shell: bash
+        env:
+          COPR_WEBHOOK: ${{ secrets.COPR_WEBHOOK }}
+        run: | 
+          curl -X POST "${COPR_WEBHOOK}" > /dev/null 2>&1
