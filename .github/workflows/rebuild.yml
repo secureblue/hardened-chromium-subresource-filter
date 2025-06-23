@@ -28,4 +28,4 @@ jobs:
         env:
           COPR_WEBHOOK: ${{ secrets.COPR_WEBHOOK }}
         run: | 
-          curl -X POST "${COPR_WEBHOOK}" > /dev/null 2>&1
+          curl -X POST $COPR_WEBHOOK > /dev/null 2>&1
