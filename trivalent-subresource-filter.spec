@@ -44,6 +44,7 @@ Source1: install_filter.sh
     rpm.define("_filterCount "..count-1)
 }
 
+ExclusiveArch: x86_64 aarch64
 
 # Dependencies required
 BuildRequires: nss-devel >= 3.26
@@ -111,6 +112,9 @@ PATH="$PATH:$(pwd)/third_party/ninja"
 export PATH
 
 CHROMIUM_GN_DEFINES=""
+%ifarch aarch64
+CHROMIUM_GN_DEFINES+=' target_cpu="arm64"'
+%endif
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
