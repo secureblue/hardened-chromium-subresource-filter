@@ -49,8 +49,6 @@ readonly LIST_SOURCES=(
 readonly NAME="trivalent-subresource-filter"
 
 # Clone the repo with the spec file and chromium source downloader
-cp "$NAME/fedora_patches/chromium-127-rust-clanglib.patch" ./
-cp "$NAME/patches/use-clang19-cflag.patch" ./
 cp "$NAME/$NAME.spec" ./
 cp "$NAME/install_filter.sh" ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
