@@ -1,8 +1,4 @@
 %global numjobs %{_smp_build_ncpus}
-%global build_target() \
-	export NINJA_STATUS="[%2:%f/%t] " ; \
-	ninja -j %{numjobs} -C '%1' '%2'
-%global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 %global chromium_name trivalent
 
@@ -44,12 +40,12 @@ Source1: install_filter.sh
     rpm.define("_filterCount "..count-1)
 }
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 # Dependencies required
 BuildRequires: nss-devel >= 3.26
 BuildRequires: glib2-devel
-BuildRequires: %{chromium_pybin}
+BuildRequires: %{__python3}
 BuildRequires: cups-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libudev-devel
@@ -97,34 +93,17 @@ export LDFLAGS
 
 export RUSTC_BOOTSTRAP=1
 
-# add internal clang to PATH for build
-PATH="$PATH:$(pwd)/third_party/llvm-build/Release+Asserts/bin"
-
-# add internal rust utils to PATH for build
-PATH="$PATH:$(pwd)/third_party/rust-toolchain/bin"
-
-# add internal nodejs to PATH for build
-PATH="$PATH:$(pwd)/third_party/node/linux/node-linux-x64/bin"
-
-# add internal ninja to PATH for build
-PATH="$PATH:$(pwd)/third_party/ninja"
-
-export PATH
-
 CHROMIUM_GN_DEFINES=""
-%ifarch aarch64
-CHROMIUM_GN_DEFINES+=' target_cpu="arm64"'
-%endif
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 export CHROMIUM_GN_DEFINES
 
-mkdir -p %{chromebuilddir} && cp -a buildtools/linux64/gn %{chromebuilddir}/
+mkdir -p %{chromebuilddir}
 
 # Build the converter tool
-%{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
-%build_target %{chromebuilddir} subresource_filter_tools
+buildtools/linux64/gn --script-executable=%{__python3} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
+%{__python3} third_party/depot_tools/autoninja.py -C %{chromebuilddir} subresource_filter_tools
 
 # copy the filters over and generate the string of said filters
 for filter in %{_sourcedir}/filter-*.txt; do
