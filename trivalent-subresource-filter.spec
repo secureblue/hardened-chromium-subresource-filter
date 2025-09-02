@@ -51,6 +51,13 @@ Source1: install_filter.sh
 
 
 %{lua:
+    rpm.execute("pwd")
+    if posix.getenv("HOME") == "/builddir" then
+        fpatches = rpm.glob('/builddir/build/SOURCES/fedora-*.patch')
+    else
+        fpatches = rpm.glob(macros['_sourcedir']..'/fedora-*.patch')
+    end
+
     local count = 0
     local printPatch = ""
 
@@ -68,7 +75,7 @@ Source1: install_filter.sh
     end
 
     if macros['use_system_toolchain'] == "1" then
-    	  os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
+        os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
     end
 }
 ExclusiveArch: x86_64 aarch64
@@ -166,6 +173,11 @@ export PATH
 %endif
 
 CHROMIUM_GN_DEFINES=""
+%ifarch aarch64
+CHROMIUM_GN_DEFINES+=' target_cpu="arm64"'
+CHROMIUM_GN_DEFINES+=' use_v4l2_codec=true'
+CHROMIUM_GN_DEFINES+=' enable_shadow_call_stack=true'
+%endif
 %if %{use_system_toolchain}
 CHROMIUM_GN_DEFINES+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
 CHROMIUM_GN_DEFINES+=" host_toolchain=\"//build/toolchain/linux/unbundle:default\""
