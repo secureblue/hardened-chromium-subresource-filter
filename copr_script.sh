@@ -67,4 +67,4 @@ patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
 	cp "${patches[i]}" "../../build/fedora-$((i+1000)).patch"
 done
-cd -
+cd - || exit 1
