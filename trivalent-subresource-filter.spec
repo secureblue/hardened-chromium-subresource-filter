@@ -1,8 +1,4 @@
 %global numjobs %{_smp_build_ncpus}
-%global build_target() \
-	export NINJA_STATUS="[%2:%f/%t] " ; \
-	ninja -j %{numjobs} -C '%1' '%2'
-%global chromium_pybin %{__python3}
 %global chromebuilddir out/Release
 %global chromium_name trivalent
 
@@ -49,7 +45,7 @@ ExclusiveArch: x86_64 aarch64
 # Dependencies required
 BuildRequires: nss-devel >= 3.26
 BuildRequires: glib2-devel
-BuildRequires: %{chromium_pybin}
+BuildRequires: %{__python3}
 BuildRequires: cups-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libudev-devel
@@ -106,11 +102,11 @@ CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 export CHROMIUM_GN_DEFINES
 
-mkdir -p %{chromebuilddir} && cp -a buildtools/linux64/gn %{chromebuilddir}/
+mkdir -p %{chromebuilddir}
 
 # Build the converter tool
-%{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
-%build_target %{chromebuilddir} subresource_filter_tools
+buildtools/linux64/gn --script-executable=%{__python3} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
+%{__python3} third_party/depot_tools/autoninja.py -C %{chromebuilddir} subresource_filter_tools
 
 # copy the filters over and generate the string of said filters
 for filter in %{_sourcedir}/filter-*.txt; do
