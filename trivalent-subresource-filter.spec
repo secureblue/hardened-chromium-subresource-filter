@@ -97,20 +97,6 @@ export LDFLAGS
 
 export RUSTC_BOOTSTRAP=1
 
-# add internal clang to PATH for build
-PATH="$PATH:$(pwd)/third_party/llvm-build/Release+Asserts/bin"
-
-# add internal rust utils to PATH for build
-PATH="$PATH:$(pwd)/third_party/rust-toolchain/bin"
-
-# add internal nodejs to PATH for build
-PATH="$PATH:$(pwd)/third_party/node/linux/node-linux-x64/bin"
-
-# add internal ninja to PATH for build
-PATH="$PATH:$(pwd)/third_party/ninja"
-
-export PATH
-
 CHROMIUM_GN_DEFINES=""
 %ifarch aarch64
 CHROMIUM_GN_DEFINES+=' target_cpu="arm64"'
