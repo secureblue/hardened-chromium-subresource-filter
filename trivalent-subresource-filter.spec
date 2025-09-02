@@ -72,9 +72,6 @@ Source1: install_filter.sh
             count = count + 1
         end
         rpm.define("_fedoraPatchCount "..count-1)
-    end
-
-    if macros['use_system_toolchain'] == "1" then
         os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
     end
 }
