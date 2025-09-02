@@ -75,6 +75,7 @@ Source1: install_filter.sh
         os.execute("echo 'Autopatch F: "..macros['_fedoraPatchCount'].."'")
     end
 }
+
 ExclusiveArch: x86_64 aarch64
 
 # Dependencies required
@@ -111,7 +112,6 @@ BuildRequires: rustc
 BuildRequires: bindgen-cli
 BuildRequires: ninja-build
 BuildRequires: gn
-BuildRequires: nodejs
 %global build_target() \
 	export NINJA_STATUS="[%2:%f/%t] " ; \
 	ninja -j %{numjobs} -C '%1' '%2'
@@ -164,7 +164,6 @@ declare -r rust_bindgen_root="$(which bindgen | sed 's#/s\?bin/.*##')"
 %else
 declare -r SOURCE_DIR="$PWD/third_party"
 # add internal gn to PATH for build
-cp -a buildtools/linux64/gn %{chromebuilddir}/
 PATH="$PATH:$PWD/buildtools/linux64"
 export PATH
 %endif
@@ -172,8 +171,6 @@ export PATH
 CHROMIUM_GN_DEFINES=""
 %ifarch aarch64
 CHROMIUM_GN_DEFINES+=' target_cpu="arm64"'
-CHROMIUM_GN_DEFINES+=' use_v4l2_codec=true'
-CHROMIUM_GN_DEFINES+=' enable_shadow_call_stack=true'
 %endif
 %if %{use_system_toolchain}
 CHROMIUM_GN_DEFINES+=" custom_toolchain=\"//build/toolchain/linux/unbundle:default\""
@@ -193,7 +190,7 @@ export CHROMIUM_GN_DEFINES
 mkdir -p %{chromebuilddir}
 
 # Build the converter tool
-%{chromebuilddir}/gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
+gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 
 %if %{use_system_toolchain}
 %build_target %{chromebuilddir} subresource_filter_tools
