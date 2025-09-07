@@ -62,6 +62,8 @@ for url in "${LIST_SOURCES[@]}"; do
 done
 
 git clone https://github.com/secureblue/Trivalent.git
+rm -rf Trivalent/build/
+mkdir Trivalent/build/
 cd Trivalent/fedora_patches/ || exit 1 
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
