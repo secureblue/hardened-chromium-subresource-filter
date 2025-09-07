@@ -14,7 +14,6 @@ Source69: chromium-version.txt
 %endif
 
 Name:      %{chromium_name}-subresource-filter
-BuildArch: noarch
 Requires:  %{chromium_name}
 License:   Apache-2.0
 Summary:   Subresource filter for %{chromium_name}
