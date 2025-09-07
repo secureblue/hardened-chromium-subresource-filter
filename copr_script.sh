@@ -65,6 +65,7 @@ git clone https://github.com/secureblue/Trivalent.git
 cd Trivalent/fedora_patches/ || exit 1 
 patches=(*.patch)
 for ((i=0; i<${#patches[@]}; i++)); do
-	cp "${patches[i]}" "../../build/fedora-$((i+1000)).patch"
+	cp "${patches[i]}" "../build/fedora-$((i+1000)).patch"
 done
-cd - || exit 1
+cd .. || exit 1
+mv ./build/* ../
