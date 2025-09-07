@@ -127,13 +127,6 @@ Filter used by %{chromium_name} to provide content blocking.
 %autopatch -p1 -m 1000 -M %{_fedoraPatchCount}
 %endif
 
-%if %{use_system_toolchain}
-mkdir -p third_party/node/linux/node-linux-x64/bin
-rm third_party/node/linux/node-linux-x64/bin/node
-ln -s $(which node) third_party/node/linux/node-linux-x64/bin/node
-%endif
-
-
 %build
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
 FLAGS+=' -Wno-unused-but-set-variable -Wno-unused-result -Wno-unused-function -Wno-unused-variable'
