@@ -182,7 +182,7 @@ export CHROMIUM_GN_DEFINES
 mkdir -p %{chromebuilddir}
 
 # Build the converter tool
-gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
+gn --script-executable=%{__python3} gen --args="$CHROMIUM_GN_DEFINES" %{chromebuilddir}
 
 %if %{use_system_toolchain}
 %build_target %{chromebuilddir} subresource_filter_tools
