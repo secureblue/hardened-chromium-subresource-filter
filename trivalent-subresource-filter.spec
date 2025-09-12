@@ -1,6 +1,7 @@
 %global numjobs %{_smp_build_ncpus}
 %global chromebuilddir out/Release
 %global chromium_name trivalent
+%global debug_package %{nil}
 
 Source69: chromium-version.txt
 
