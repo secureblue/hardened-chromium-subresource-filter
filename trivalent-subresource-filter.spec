@@ -154,9 +154,9 @@ declare -r clang_version="$(clang --version | sed -n 's/clang version //p' | cut
 declare -r clang_base_path="$(PATH=/usr/bin:/usr/sbin which clang | sed 's#/bin/.*##')"
 declare -r rust_bindgen_root="$(which bindgen | sed 's#/s\?bin/.*##')"
 %else
-declare -r SOURCE_DIR="$PWD/third_party"
+declare -r present_source_dir="$PWD"
 # add internal gn to PATH for build
-PATH="$PATH:$PWD/buildtools/linux64"
+PATH="$PATH:$present_source_dir/buildtools/linux64"
 export PATH
 %endif
 
@@ -187,7 +187,7 @@ gn --script-executable=%{chromium_pybin} gen --args="$CHROMIUM_GN_DEFINES" %{chr
 %if %{use_system_toolchain}
 %build_target %{chromebuilddir} subresource_filter_tools
 %else
-%{__python3} $SOURCE_DIR/depot_tools/autoninja.py -C %{chromebuilddir} subresource_filter_tools
+%{__python3} $present_source_dir/third_party/depot_tools/autoninja.py -C %{chromebuilddir} subresource_filter_tools
 %endif
 
 # copy the filters over and generate the string of said filters
