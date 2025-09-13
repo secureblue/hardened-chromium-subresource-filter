@@ -136,6 +136,9 @@ FLAGS+=' -Wno-unused-const-variable -Wno-unneeded-internal-declaration -Wno-unkn
 CFLAGS="$FLAGS"
 CXXFLAGS="$FLAGS"
 LDFLAGS="-Wl,-z,now -Wl,-z,pack-relative-relocs"
+RUSTFLAGS=${RUSTFLAGS/--cap-lints/-Clink-arg=-Wl,-z,pack-relative-relocs --cap-lints}
+RUSTFLAGS=${RUSTFLAGS/debuginfo=?/debuginfo=0}
+
 
 export CC=clang
 export CXX=clang++
@@ -145,6 +148,7 @@ export READELF=llvm-readelf
 export CFLAGS
 export CXXFLAGS
 export LDFLAGS
+export RUSTFLAGS
 
 export RUSTC_BOOTSTRAP=1
 
