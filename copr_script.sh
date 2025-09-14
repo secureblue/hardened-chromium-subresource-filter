@@ -60,14 +60,3 @@ for url in "${LIST_SOURCES[@]}"; do
     wget "$url" -O "filter-$counter.txt"
     counter=$((counter+1))
 done
-
-git clone https://github.com/secureblue/Trivalent.git
-rm -rf Trivalent/build/
-mkdir Trivalent/build/
-cd Trivalent/fedora_patches/ || exit 1 
-patches=(*.patch)
-for ((i=0; i<${#patches[@]}; i++)); do
-	cp "${patches[i]}" "../build/fedora-$((i+1000)).patch"
-done
-cd .. || exit 1
-mv ./build/* ../
