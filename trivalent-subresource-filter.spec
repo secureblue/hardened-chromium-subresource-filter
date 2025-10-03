@@ -103,8 +103,7 @@ declare -r present_source_dir="$PWD"
 PATH="$PATH:$present_source_dir/buildtools/linux64"
 export PATH
 
-# build/config/BUILDCONFIG.gn
-# use_libcxx_modules = is_clang
+# Disable libcxx modules
 sed -i -e "s/use_libcxx_modules = is_clang/use_libcxx_modules = false/g" $present_source_dir/build/config/BUILDCONFIG.gn
 
 CHROMIUM_GN_DEFINES=""
