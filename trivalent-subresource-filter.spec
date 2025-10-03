@@ -106,6 +106,7 @@ export PATH
 CHROMIUM_GN_DEFINES=""
 CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
+CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' treat_warnings_as_errors=false'
 export CHROMIUM_GN_DEFINES
 
