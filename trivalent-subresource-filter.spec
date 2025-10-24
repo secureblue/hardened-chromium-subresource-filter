@@ -28,8 +28,8 @@ Summary:   Subresource filter for %{chromium_name}
         -- This will dynamically set the version based on chromium's latest stable release channel
         print("Version: "..version_tag.."\n")
 
-        -- This will automatically increment the release every ~32 minutes
-        print("Release: "..(os.time() // 2000).."\n")
+        -- This will automatically increment the release every ~16 minutes
+        print("Release: "..(os.time() // 1000).."\n")
 }
 
 Source0: chromium-%{version}-clean.tar.xz
