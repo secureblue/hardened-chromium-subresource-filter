@@ -122,6 +122,7 @@ CHROMIUM_GN_DEFINES+=' system_libdir="%{_lib}"'
 CHROMIUM_GN_DEFINES+=' is_clang=true'
 CHROMIUM_GN_DEFINES+=' use_sysroot=false'
 CHROMIUM_GN_DEFINES+=' treat_warnings_as_errors=false'
+CHROMIUM_GN_DEFINES+=' use_siso=true'
 export CHROMIUM_GN_DEFINES
 
 mkdir -p %{chromebuilddir}
