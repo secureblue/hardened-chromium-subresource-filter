@@ -50,6 +50,7 @@ readonly NAME="trivalent-subresource-filter"
 
 # Clone the repo with the spec file and chromium source downloader
 cp "$NAME/$NAME.spec" ./
+cp "$NAME/use-cwd-for-gclient-path.patch" ./
 cp "$NAME/install_filter.sh" ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
 rm -rf "./$NAME"
