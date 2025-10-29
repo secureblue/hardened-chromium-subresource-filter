@@ -1,5 +1,6 @@
 %global numjobs %{_smp_build_ncpus}
 %global chromebuilddir out/Release
+%global _default_patch_fuzz 2
 %global chromium_name trivalent
 %global debug_package %{nil}
 
@@ -79,11 +80,15 @@ BuildRequires: libatomic
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: git-core
 
+Patch0: use-cwd-for-gclient-path.patch
+
 %description
 Filter used by %{chromium_name} to provide content blocking.
 
 %prep
 %setup -q -n chromium-%{version}
+
+%patch -P0 -p1 -b .use-cwd-for-gclient-path
 
 %build
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
