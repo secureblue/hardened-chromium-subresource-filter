@@ -12,33 +12,39 @@
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and limitations under the License.
 
-INSTALL_DIR="/etc/trivalent/filter"
-readonly INSTALL_DIR
-OLD_DIR="$HOME/.config/trivalent"
-readonly OLD_DIR
-FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
-readonly FILTER_VER
-CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
-readonly CURRENT_VER
+set -oue pipefail
 
-echo "Checking Subresource Filter version..."
-echo "  Installed version: $CURRENT_VER"
-echo "  Package version: $FILTER_VER"
+declare -ri LOG_LEVEL="${BROWSER_LOG_LEVEL:-0}"
+
+function logecho () {
+  if [[ $LOG_LEVEL -gt 1 ]]; then
+    echo $1
+  fi
+}
+
+declare -r INSTALL_DIR="/etc/trivalent/filter"
+declare -r OLD_DIR="$HOME/.config/trivalent"
+declare -r FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
+declare -r CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
+
+logecho "Checking Subresource Filter version..."
+logecho "  Installed version: $CURRENT_VER"
+logecho "  Package version: $FILTER_VER"
 if [ "$FILTER_VER" == "$CURRENT_VER" ]; then
-  echo "No need to update, versions match"
+  logecho "No need to update, versions match"
   exit 0
 fi
-echo "Version mismatch, updating filter..."
+logecho "Version mismatch, updating subresource filter..."
 
-readonly NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/$FILTER_VER"
+declare -r NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/$FILTER_VER"
 
-echo "Removing '$OLD_DIR/Subresource Filter'"
+logecho "Removing '$OLD_DIR/Subresource Filter'"
 rm -r "$OLD_DIR/Subresource Filter"
-echo "Creating '$NEW_DIR'"
+logecho "Creating '$NEW_DIR'"
 mkdir -p "$NEW_DIR"
-echo "Adding filter list from '$INSTALL_DIR'"
+logecho "Adding filter list from '$INSTALL_DIR'"
 cp "$INSTALL_DIR/trivalent-blocklist" "$NEW_DIR/Filtering Rules"
-echo "Creating 'manifest.json'"
+logecho "Creating 'manifest.json'"
 cat << EOF > "$NEW_DIR/manifest.json"
 {
   "manifest_version": 2,
