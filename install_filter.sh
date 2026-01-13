@@ -18,7 +18,7 @@ declare -ri LOG_LEVEL="${BROWSER_LOG_LEVEL:-0}"
 
 function logecho () {
   if [[ $LOG_LEVEL -gt 1 ]]; then
-    echo $1
+    echo "$1"
   fi
 }
 
