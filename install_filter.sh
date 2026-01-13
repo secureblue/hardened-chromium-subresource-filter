@@ -17,8 +17,9 @@ set -oue pipefail
 declare -ri LOG_LEVEL="${BROWSER_LOG_LEVEL:-0}"
 
 function logecho () {
-  if [[ $LOG_LEVEL -gt 1 ]]; then
-    echo "$1"
+  local -ri level=$1
+  if [[ $LOG_LEVEL -ge $level ]]; then
+    echo "$2"
   fi
 }
 
@@ -27,24 +28,24 @@ declare -r OLD_DIR="$HOME/.config/trivalent"
 declare -r FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
 declare -r CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
 
-logecho "Checking Subresource Filter version..."
-logecho "  Installed version: $CURRENT_VER"
-logecho "  Package version: $FILTER_VER"
+logecho 1 "Checking Subresource Filter version..."
+logecho 1 "  Installed version: $CURRENT_VER"
+logecho 1 "  Packaged version: $FILTER_VER"
 if [ "$FILTER_VER" == "$CURRENT_VER" ]; then
-  logecho "No need to update, versions match"
+  logecho 1 "No need to update, versions match"
   exit 0
 fi
-logecho "Version mismatch, updating subresource filter..."
+logecho 1 "Version mismatch, updating subresource filter..."
 
 declare -r NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/$FILTER_VER"
 
-logecho "Removing '$OLD_DIR/Subresource Filter'"
+logecho 2 "Removing '$OLD_DIR/Subresource Filter'"
 rm -r "$OLD_DIR/Subresource Filter"
-logecho "Creating '$NEW_DIR'"
+logecho 2 "Creating '$NEW_DIR'"
 mkdir -p "$NEW_DIR"
-logecho "Adding filter list from '$INSTALL_DIR'"
+logecho 2 "Adding filter list from '$INSTALL_DIR'"
 cp "$INSTALL_DIR/trivalent-blocklist" "$NEW_DIR/Filtering Rules"
-logecho "Creating 'manifest.json'"
+logecho 2 "Creating 'manifest.json'"
 cat << EOF > "$NEW_DIR/manifest.json"
 {
   "manifest_version": 2,
