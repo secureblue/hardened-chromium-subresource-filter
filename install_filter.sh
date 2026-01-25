@@ -23,10 +23,14 @@ function logecho () {
   fi
 }
 
-declare -r INSTALL_DIR="/etc/trivalent/filter"
-declare -r OLD_DIR="$HOME/.config/trivalent"
-declare -r FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
-declare -r CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
+INSTALL_DIR="/etc/trivalent/filter"
+declare -r INSTALL_DIR
+OLD_DIR="$HOME/.config/trivalent"
+declare -r OLD_DIR
+FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
+declare -r FILTER_VER
+CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
+declare -r CURRENT_VER
 
 logecho 1 "Checking Subresource Filter version..."
 logecho 1 "  Installed version: $CURRENT_VER"
@@ -37,7 +41,8 @@ if [ "$FILTER_VER" == "$CURRENT_VER" ]; then
 fi
 logecho 1 "Version mismatch, updating subresource filter..."
 
-declare -r NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/$FILTER_VER"
+NEW_DIR="$OLD_DIR/Subresource Filter/Unindexed Rules/$FILTER_VER"
+declare -r NEW_DIR
 
 logecho 2 "Removing '$OLD_DIR/Subresource Filter'"
 rm -r "$OLD_DIR/Subresource Filter"
