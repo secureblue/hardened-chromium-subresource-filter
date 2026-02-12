@@ -10,13 +10,12 @@
 #
 # Unless required by applicable law or agreed to in writing, software distributed under the License is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and limitations under the License.
+# See the License for the specific language governing permissions and limitations under the License.\
 
-wget https://versionhistory.googleapis.com/v1/chrome/platforms/linux/channels/stable/versions/all/releases?filter=endtime=none -O chromium-version.json
-grep \"version\" chromium-version.json | grep -oh "[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*" > chromium-version.txt
+set -ueo pipefail
 
 # Preset variables
-readonly LIST_SOURCES=(
+declare -r LIST_SOURCES=(
     "https://easylist.to/easylist/easylist.txt"
     "https://easylist.to/easylist/easyprivacy.txt"
     "https://secure.fanboy.co.nz/fanboy-annoyance.txt"
@@ -46,13 +45,14 @@ readonly LIST_SOURCES=(
     "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt"
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_7_Japanese/filter.txt"
 )
-readonly NAME="trivalent-subresource-filter"
+declate -r NAME="trivalent-subresource-filter"
 
 # Clone the repo with the spec file and chromium source downloader
 cp "$NAME/$NAME.spec" ./
 cp "$NAME/use-cwd-for-gclient-path.patch" ./
 cp "$NAME/install_filter.sh" ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
+cp /usr/src/chromium/chromium-version.txt ./
 rm -rf "./$NAME"
 
 # Get the filters that will be added
