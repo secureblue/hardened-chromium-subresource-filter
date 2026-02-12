@@ -56,7 +56,7 @@ cp /usr/src/chromium/chromium-version.txt ./
 rm -rf "./$NAME"
 
 # Get the filters that will be added
-counter=1
+declare -i counter=1
 for url in "${LIST_SOURCES[@]}"; do
     wget "$url" -O "filter-$counter.txt"
     counter=$((counter+1))
