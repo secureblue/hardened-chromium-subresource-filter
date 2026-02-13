@@ -45,7 +45,7 @@ declare -r LIST_SOURCES=(
     "https://raw.githubusercontent.com/lassekongo83/Frellwits-filter-lists/master/Frellwits-Swedish-Filter.txt"
     "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_7_Japanese/filter.txt"
 )
-declate -r NAME="trivalent-subresource-filter"
+declare -r NAME="trivalent-subresource-filter"
 
 # Clone the repo with the spec file and chromium source downloader
 cp "$NAME/$NAME.spec" ./
