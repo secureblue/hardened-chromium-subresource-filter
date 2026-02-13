@@ -29,7 +29,11 @@ OLD_DIR="$HOME/.config/trivalent"
 declare -r OLD_DIR
 FILTER_VER=$(<"$INSTALL_DIR/trivalent-blocklist-version.txt")
 declare -r FILTER_VER
-CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
+if [[ -d "$OLD_DIR/Subresource Filter/Unindexed Rules" ]]; then
+  CURRENT_VER=$(ls "$OLD_DIR/Subresource Filter/Unindexed Rules")
+else
+  CURRENT_VER="N/A"
+fi
 declare -r CURRENT_VER
 
 logecho 1 "Checking Subresource Filter version..."
