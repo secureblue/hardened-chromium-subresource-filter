@@ -25,7 +25,7 @@ declare -r LIST_SOURCES=(
     "https://raw.githubusercontent.com/DandelionSprout/adfilt/master/NorwegianExperimentalList%20alternate%20versions/NordicFiltersABP-Inclusion.txt"
     "https://easylist-downloads.adblockplus.org/easylistchina.txt"
     "https://raw.githubusercontent.com/tomasko126/easylistczechandslovak/master/filters.txt"
-    "https://easylist-downloads.adblockplus.org/easylistdutch.txt"
+    "https://raw.githubusercontent.com/AdguardTeam/FiltersRegistry/master/filters/filter_8_Dutch/filter.txt"
     "https://easylist.to/easylistgermany/easylistgermany.txt"
     "https://raw.githubusercontent.com/easylist/EasyListHebrew/master/EasyListHebrew.txt"
     "https://easylist-downloads.adblockplus.org/easylistitaly.txt"
