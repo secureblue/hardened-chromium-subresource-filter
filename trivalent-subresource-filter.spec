@@ -66,6 +66,7 @@ BuildRequires: pkgconfig(Qt6Core)
 BuildRequires: pkgconfig(Qt6Widgets)
 BuildRequires: libva-devel
 BuildRequires: libatomic
+BuildRequires: pipewire-devel
 # One of the python scripts invokes git to look for a hash. So helpful.
 BuildRequires: git-core
 
