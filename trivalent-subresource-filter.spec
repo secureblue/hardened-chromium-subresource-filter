@@ -158,3 +158,6 @@ chmod a+r $INSTALL_DIR/%{chromium_name}-blocklist-version.txt
 %{_sysconfdir}/%{chromium_name}/filter/%{chromium_name}-blocklist
 %{_sysconfdir}/%{chromium_name}/filter/%{chromium_name}-blocklist-version.txt
 %{_libdir}/%{chromium_name}/install_filter.sh
+
+%changelog
+# Changelog entries automatically generated from Copr builds

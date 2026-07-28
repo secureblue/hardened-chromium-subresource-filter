@@ -62,3 +62,8 @@ for url in "${LIST_SOURCES[@]}"; do
     wget "$url" -O "filter-$counter.txt"
     counter=$((counter+1))
 done
+
+# Generate changelog from 50 most recent successful Copr builds
+curl -fLsS --retry 3 "https://copr.fedorainfracloud.org/api_3/build/list?ownername=secureblue&projectname=packages&packagename=${NAME}&status=succeeded" \
+    | jq -cr '.items[0:50][] | "* \(.submitted_on | strftime("%a %b %d %Y")) secureblue <noreply@secureblue.dev> - \(.source_package.version)"' \
+    >> "${NAME}.spec"
