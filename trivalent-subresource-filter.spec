@@ -71,7 +71,7 @@ BuildRequires: pipewire-devel
 BuildRequires: git-core
 
 Patch0: use-cwd-for-gclient-path.patch
-Patch1: 150-remove-sysroot-dep.patch
+Patch1: 151-fix-dep-definition.patch
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
@@ -80,7 +80,7 @@ Filter used by %{chromium_name} to provide content blocking.
 %setup -q -n chromium-%{version}
 
 %patch -P0 -p1 -b .use-cwd-for-gclient-path
-%patch -P1 -p1 -b .150-remove-sysroot-dep
+%patch -P1 -p1 -b .151-fix-dep-definition
 
 %build
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'
@@ -158,3 +158,6 @@ chmod a+r $INSTALL_DIR/%{chromium_name}-blocklist-version.txt
 %{_sysconfdir}/%{chromium_name}/filter/%{chromium_name}-blocklist
 %{_sysconfdir}/%{chromium_name}/filter/%{chromium_name}-blocklist-version.txt
 %{_libdir}/%{chromium_name}/install_filter.sh
+
+%changelog
+# Changelog entries automatically generated from Copr builds

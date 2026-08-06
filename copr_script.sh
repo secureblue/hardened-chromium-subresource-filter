@@ -50,7 +50,7 @@ declare -r NAME="trivalent-subresource-filter"
 # Clone the repo with the spec file and chromium source downloader
 cp "$NAME/$NAME.spec" ./
 cp "$NAME/use-cwd-for-gclient-path.patch" ./
-cp "$NAME/150-remove-sysroot-dep.patch" ./
+cp "$NAME/151-fix-dep-definition.patch" ./
 cp "$NAME/install_filter.sh" ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
 cp /usr/src/chromium/chromium-version.txt ./
@@ -62,3 +62,8 @@ for url in "${LIST_SOURCES[@]}"; do
     wget "$url" -O "filter-$counter.txt"
     counter=$((counter+1))
 done
+
+# Generate changelog from 50 most recent successful Copr builds
+curl -fLsS --retry 3 "https://copr.fedorainfracloud.org/api_3/build/list?ownername=secureblue&projectname=packages&packagename=${NAME}&status=succeeded" \
+    | jq -cr '.items[0:50][] | "* \(.submitted_on | strftime("%a %b %d %Y")) secureblue <noreply@secureblue.dev> - \(.source_package.version)"' \
+    >> "${NAME}.spec"
