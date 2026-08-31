@@ -71,7 +71,6 @@ BuildRequires: pipewire-devel
 BuildRequires: git-core
 
 Patch0: use-cwd-for-gclient-path.patch
-Patch1: 151-fix-dep-definition.patch
 
 %description
 Filter used by %{chromium_name} to provide content blocking.
@@ -80,7 +79,6 @@ Filter used by %{chromium_name} to provide content blocking.
 %setup -q -n chromium-%{version}
 
 %patch -P0 -p1 -b .use-cwd-for-gclient-path
-%patch -P1 -p1 -b .151-fix-dep-definition
 
 %build
 FLAGS=' -Wno-deprecated-declarations -Wno-unknown-warning-option -Wno-unused-command-line-argument'

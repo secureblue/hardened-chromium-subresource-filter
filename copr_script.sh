@@ -50,7 +50,6 @@ declare -r NAME="trivalent-subresource-filter"
 # Clone the repo with the spec file and chromium source downloader
 cp "$NAME/$NAME.spec" ./
 cp "$NAME/use-cwd-for-gclient-path.patch" ./
-cp "$NAME/151-fix-dep-definition.patch" ./
 cp "$NAME/install_filter.sh" ./
 cp /usr/src/chromium/chromium-*-clean.tar.xz ./
 cp /usr/src/chromium/chromium-version.txt ./
